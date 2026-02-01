@@ -2,6 +2,7 @@ import { FounderTransmission } from "@/components/dashboard/founder-transmission
 import { MetricsGrid } from "@/components/dashboard/metrics-grid";
 import { SystemStatus } from "@/components/dashboard/system-status";
 import { DashboardCards } from "@/components/dashboard/dashboard-cards";
+import { PromoBanner } from "@/components/dashboard/promo-banner";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <h1 className="sr-only">AI Wealth OS</h1>
 
       <div className="space-y-8 pb-20">
+        <PromoBanner />
         <FounderTransmission />
 
         <div className="space-y-2 mb-8">
