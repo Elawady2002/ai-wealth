@@ -16,13 +16,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const [theme, setThemeState] = useState<Theme>("dark");
 
     useEffect(() => {
-        // Get saved theme from localStorage
-        const savedTheme = localStorage.getItem("theme") as Theme;
-        if (savedTheme) {
-            setThemeState(savedTheme);
-            document.documentElement.classList.toggle("light", savedTheme === "light");
-            document.documentElement.classList.toggle("dark", savedTheme === "dark");
-        }
+        // Force dark mode for now as requested
+        setTheme("dark");
     }, []);
 
     const setTheme = (newTheme: Theme) => {

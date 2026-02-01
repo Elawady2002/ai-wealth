@@ -82,43 +82,6 @@ export default function CalibrationPage() {
                 </p>
             </div>
 
-            {/* Theme Toggle */}
-            <GlassPanel intensity="medium" className="p-6 border-white/5 mb-6">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
-                            <Palette className="w-6 h-6 text-purple-400" />
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-white">Appearance</h3>
-                            <p className="text-sm text-gray-400">Choose your preferred theme</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-1 bg-black/40 rounded-xl p-1">
-                        <button
-                            onClick={() => setTheme("dark")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${theme === "dark"
-                                    ? "bg-primary/20 text-primary"
-                                    : "text-gray-500 hover:text-gray-300"
-                                }`}
-                        >
-                            <Moon className="w-4 h-4" />
-                            <span className="text-sm font-medium">Dark</span>
-                        </button>
-                        <button
-                            onClick={() => setTheme("light")}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${theme === "light"
-                                    ? "bg-primary/20 text-primary"
-                                    : "text-gray-500 hover:text-gray-300"
-                                }`}
-                        >
-                            <Sun className="w-4 h-4" />
-                            <span className="text-sm font-medium">Light</span>
-                        </button>
-                    </div>
-                </div>
-            </GlassPanel>
-
             {/* Settings Sections */}
             <div className="space-y-6">
                 {settingsSections.map((section, sectionIndex) => (
