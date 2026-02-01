@@ -1,0 +1,4 @@
+:HL["/ai-wealth/_next/static/chunks/66942d34a58c2ed2.css","style"]
+:HL["/ai-wealth/_next/static/media/0c795a286deabae8-s.p.b6c48e4e.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/ai-wealth/_next/static/media/0c89a48fa5027cee-s.p.4564287c.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"buildId":"oQitUYEIqD99Sjecg3j-R","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"upgrade","paramType":null,"paramKey":"upgrade","hasRuntimePrefetch":false,"slots":{"children":{"name":"automated-profits","paramType":null,"paramKey":"automated-profits","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
