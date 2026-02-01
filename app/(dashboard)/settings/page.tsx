@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTheme } from "@/contexts/theme-context";
 
 const settingsSections = [
     {
@@ -49,6 +50,7 @@ const settingsSections = [
 
 export default function CalibrationPage() {
     const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({});
+    const { theme, setTheme } = useTheme();
 
     const handleToggle = (sectionTitle: string, settingName: string, initialState: boolean) => {
         const key = `${sectionTitle}-${settingName}`;
@@ -92,12 +94,24 @@ export default function CalibrationPage() {
                             <p className="text-sm text-gray-400">Choose your preferred theme</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 bg-black/40 rounded-xl p-1">
-                        <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/20 text-primary">
+                    <div className="flex items-center gap-1 bg-black/40 rounded-xl p-1">
+                        <button
+                            onClick={() => setTheme("dark")}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${theme === "dark"
+                                    ? "bg-primary/20 text-primary"
+                                    : "text-gray-500 hover:text-gray-300"
+                                }`}
+                        >
                             <Moon className="w-4 h-4" />
                             <span className="text-sm font-medium">Dark</span>
                         </button>
-                        <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-500 hover:text-gray-300 transition-colors">
+                        <button
+                            onClick={() => setTheme("light")}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${theme === "light"
+                                    ? "bg-primary/20 text-primary"
+                                    : "text-gray-500 hover:text-gray-300"
+                                }`}
+                        >
                             <Sun className="w-4 h-4" />
                             <span className="text-sm font-medium">Light</span>
                         </button>
@@ -175,8 +189,8 @@ export default function CalibrationPage() {
                             <button
                                 key={item.label}
                                 className={`w-full flex items-center justify-between p-4 rounded-lg border transition-colors ${item.danger
-                                        ? 'bg-red-500/5 border-red-500/20 hover:bg-red-500/10'
-                                        : 'bg-black/30 border-white/5 hover:bg-white/5'
+                                    ? 'bg-red-500/5 border-red-500/20 hover:bg-red-500/10'
+                                    : 'bg-black/30 border-white/5 hover:bg-white/5'
                                     }`}
                             >
                                 <div className="text-left">

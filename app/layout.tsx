@@ -3,6 +3,7 @@ import { Inter, Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/contexts/auth-context";
+import { ThemeProvider } from "@/contexts/theme-context";
 
 // Inter - للأرقام والنص العادي (clear and readable)
 const inter = Inter({
@@ -36,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={cn(
           inter.variable,
@@ -45,9 +46,11 @@ export default function RootLayout({
           "antialiased min-h-screen font-sans selection:bg-cyan-500/30 selection:text-cyan-200"
         )}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
