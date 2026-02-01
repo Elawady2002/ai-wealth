@@ -7,35 +7,35 @@ import { motion } from "framer-motion";
 
 const features = [
     {
-        title: "بوتات أتمتة متكاملة",
-        description: "بوتات تشتغل 24/7 بدل منك",
+        title: "Complete Automation Bots",
+        description: "Bots that work 24/7 so you don't have to",
     },
     {
         title: "AI Content Generator",
-        description: "إنشاء محتوى تلقائي بالذكاء الاصطناعي",
+        description: "Create content automatically with artificial intelligence",
     },
     {
-        title: "جدولة تلقائية للمحتوى",
-        description: "نشر تلقائي على كل المنصات",
+        title: "Auto-Scheduling System",
+        description: "Automatic posting across all platforms",
     },
     {
-        title: "تقارير وتحليلات متقدمة",
-        description: "اعرف بالظبط إيه اللي شغال",
+        title: "Advanced Analytics Dashboard",
+        description: "Know exactly what's working and what isn't",
     },
     {
-        title: "A/B Testing تلقائي",
-        description: "تحسين مستمر للنتائج",
+        title: "Automatic A/B Testing",
+        description: "Continuous optimization for better results",
     },
     {
-        title: "تكامل مع +50 منصة",
-        description: "ربط كل حساباتك في مكان واحد",
+        title: "50+ Platform Integrations",
+        description: "Connect all your accounts in one place",
     },
 ];
 
 const automationStats = [
-    { label: "ساعات توفير شهرياً", value: "200+" },
-    { label: "زيادة في الأرباح", value: "340%" },
-    { label: "منشور تلقائي يومياً", value: "50+" },
+    { label: "Hours Saved Monthly", value: "200+" },
+    { label: "Profit Increase", value: "340%" },
+    { label: "Auto-Posts Per Day", value: "50+" },
 ];
 
 export default function AutomatedProfitsPage() {
@@ -48,7 +48,7 @@ export default function AutomatedProfitsPage() {
                     className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" />
-                    <span>رجوع للباقات</span>
+                    <span>Back to Packages</span>
                 </Link>
 
                 {/* Hero Section */}
@@ -61,42 +61,42 @@ export default function AutomatedProfitsPage() {
                         {/* Badge */}
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm">
                             <Bot className="w-4 h-4" />
-                            <span>أتمتة كاملة</span>
+                            <span>Full Automation</span>
                             <Sparkles className="w-4 h-4" />
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter">
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tighter">
                             Automated Profits
                         </h1>
 
                         <p className="text-xl text-gray-400 leading-relaxed">
-                            خلي الذكاء الاصطناعي يشتغل بدلك. الباقة دي بتحول البيزنس بتاعك
-                            لماكينة أرباح تشتغل وأنت نايم.
+                            Let artificial intelligence work for you. This package transforms your
+                            business into a profit machine that runs while you sleep.
                         </p>
 
                         {/* Price */}
                         <div className="flex items-baseline gap-4">
-                            <span className="text-5xl font-bold text-white">$297</span>
+                            <span className="text-5xl font-extrabold text-white">$297</span>
                             <span className="text-xl text-gray-500 line-through">$997</span>
-                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full">
-                                وفر 70%
+                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full font-medium">
+                                Save 70%
                             </span>
                         </div>
 
                         {/* CTA Button */}
                         <button className="w-full md:w-auto px-8 py-4 bg-linear-to-r from-cyan-500 to-blue-500 text-white font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(6,182,212,0.4)] hover:shadow-[0_15px_50px_rgba(6,182,212,0.5)] transition-all duration-300 hover:scale-105">
-                            فعّل الأتمتة الكاملة
+                            Activate Full Automation
                         </button>
 
                         {/* Trust Badges */}
                         <div className="flex items-center gap-6 text-sm text-gray-500">
                             <div className="flex items-center gap-2">
                                 <ShieldCheck className="w-5 h-5 text-green-400" />
-                                <span>ضمان استرداد 30 يوم</span>
+                                <span>30-Day Money Back</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Infinity className="w-5 h-5 text-cyan-400" />
-                                <span>وصول مدى الحياة</span>
+                                <span>Lifetime Access</span>
                             </div>
                         </div>
                     </motion.div>
@@ -109,7 +109,7 @@ export default function AutomatedProfitsPage() {
                     >
                         <GlassPanel intensity="medium" className="p-6">
                             <h3 className="text-xl font-bold text-white mb-6">
-                                إيه اللي هتاخده؟
+                                What&apos;s Included?
                             </h3>
 
                             <ul className="space-y-4">
@@ -141,7 +141,7 @@ export default function AutomatedProfitsPage() {
                 >
                     <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                         <Cpu className="w-5 h-5 text-cyan-400" />
-                        أرقام حقيقية من الأتمتة
+                        Real Automation Numbers
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -151,7 +151,7 @@ export default function AutomatedProfitsPage() {
                                 intensity="low"
                                 className="p-6 text-center border-cyan-500/20"
                             >
-                                <div className="text-4xl font-bold text-cyan-400 mb-2">
+                                <div className="text-4xl font-extrabold text-cyan-400 mb-2">
                                     {stat.value}
                                 </div>
                                 <div className="text-gray-400 text-sm">{stat.label}</div>

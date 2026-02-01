@@ -47,7 +47,7 @@ export default function BridgesPage() {
         <div className="space-y-8 pb-20">
             <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl text-white font-(--font-display) tracking-tighter">
+                    <h1 className="text-3xl font-bold text-white font-(family-name:--font-display) tracking-tighter">
                         My Bridges
                     </h1>
                     <p className="text-gray-400">Manage and monitor your active income assets.</p>
@@ -71,7 +71,7 @@ export default function BridgesPage() {
                             <Plus className="w-8 h-8 text-gray-500 group-hover:text-primary transition-colors" />
                         </div>
                         <div className="text-center">
-                            <h3 className="font-bold text-lg text-gray-400 group-hover:text-white transition-colors">
+                            <h3 className="font-bold text-lg text-gray-400 group-hover:text-white transition-colors font-(family-name:--font-display)">
                                 Deploy New Bridge
                             </h3>
                             <p className="text-sm text-gray-600">Sync a new affiliate URL</p>

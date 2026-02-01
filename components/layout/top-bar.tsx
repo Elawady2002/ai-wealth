@@ -84,7 +84,7 @@ export function TopBar() {
                                         )}
                                     >
                                         <item.icon className={cn("w-6 h-6", isActive ? "text-primary" : "text-current")} />
-                                        <span className="font-medium tracking-wide text-lg">{item.name}</span>
+                                        <span className="font-medium tracking-wide text-lg font-(family-name:--font-display)">{item.name}</span>
                                     </Link>
                                 );
                             })}
@@ -96,7 +96,7 @@ export function TopBar() {
                                     JD
                                 </div>
                                 <div>
-                                    <div className="font-bold text-white">John Doe</div>
+                                    <div className="font-bold text-white font-(family-name:--font-display)">John Doe</div>
                                     <div className="text-xs text-gray-400 font-mono">Elite License</div>
                                 </div>
                             </div>

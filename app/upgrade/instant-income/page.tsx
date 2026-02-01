@@ -1,52 +1,52 @@
 "use client";
 
 import { GlassPanel } from "@/components/ui/glass-panel";
-import { Zap, Check, ArrowLeft, ShieldCheck, Clock, Gift, TrendingUp } from "lucide-react";
+import { Zap, Check, ArrowLeft, ShieldCheck, Clock, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 const features = [
     {
-        title: "استراتيجية الربح في 24 ساعة",
-        description: "خطوة بخطوة لتحقيق أول دولار في يوم واحد",
+        title: "24-Hour Profit Blueprint",
+        description: "Step-by-step guide to earning your first dollar in one day",
     },
     {
-        title: "قائمة أعلى 20 منتج عمولة",
-        description: "منتجات مختارة بعناية بأعلى نسب تحويل",
+        title: "Top 20 High-Commission Products",
+        description: "Carefully selected products with the highest conversion rates",
     },
     {
-        title: "قوالب إعلانات مجربة",
-        description: "إعلانات حققت ملايين الدولارات",
+        title: "Battle-Tested Ad Templates",
+        description: "Ads that have generated millions in revenue",
     },
     {
-        title: "دعم VIP لمدة 30 يوم",
-        description: "رد مباشر على كل أسئلتك",
+        title: "30-Day VIP Support",
+        description: "Direct answers to all your questions",
     },
     {
-        title: "جلسة استشارة 1-on-1",
-        description: "45 دقيقة مع خبير أفلييت",
+        title: "1-on-1 Strategy Session",
+        description: "45 minutes with an affiliate expert",
     },
     {
-        title: "تحديثات أسبوعية",
-        description: "أحدث الاستراتيجيات والفرص",
+        title: "Weekly Updates",
+        description: "Latest strategies and opportunities delivered to you",
     },
 ];
 
 const testimonials = [
     {
-        name: "أحمد محمود",
-        result: "حققت $500 في أول أسبوع",
-        avatar: "AM",
+        name: "Michael Chen",
+        result: "Made $500 in my first week",
+        avatar: "MC",
     },
     {
-        name: "سارة علي",
-        result: "من صفر لـ $2000 شهرياً",
-        avatar: "SA",
+        name: "Sarah Johnson",
+        result: "From $0 to $2,000/month",
+        avatar: "SJ",
     },
     {
-        name: "محمد خالد",
-        result: "تركت وظيفتي بعد 3 شهور",
-        avatar: "MK",
+        name: "David Park",
+        result: "Quit my job after 3 months",
+        avatar: "DP",
     },
 ];
 
@@ -60,7 +60,7 @@ export default function InstantIncomePage() {
                     className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" />
-                    <span>رجوع للباقات</span>
+                    <span>Back to Packages</span>
                 </Link>
 
                 {/* Hero Section */}
@@ -73,41 +73,41 @@ export default function InstantIncomePage() {
                         {/* Badge */}
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm">
                             <Zap className="w-4 h-4" />
-                            <span>نتائج سريعة مضمونة</span>
+                            <span>Guaranteed Fast Results</span>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter">
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tighter">
                             Instant Income
                         </h1>
 
                         <p className="text-xl text-gray-400 leading-relaxed">
-                            مش هتستنى شهور عشان تشوف نتائج. الباقة دي مصممة عشان تبدأ تحقق
-                            أرباح في أقل من 24 ساعة من الشراء.
+                            No waiting months to see results. This package is designed so you can
+                            start generating profits within 24 hours of purchase.
                         </p>
 
                         {/* Price */}
                         <div className="flex items-baseline gap-4">
-                            <span className="text-5xl font-bold text-white">$197</span>
+                            <span className="text-5xl font-extrabold text-white">$197</span>
                             <span className="text-xl text-gray-500 line-through">$497</span>
-                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full">
-                                وفر 60%
+                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full font-medium">
+                                Save 60%
                             </span>
                         </div>
 
                         {/* CTA Button */}
                         <button className="w-full md:w-auto px-8 py-4 bg-linear-to-r from-yellow-500 to-orange-500 text-black font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(234,179,8,0.4)] hover:shadow-[0_15px_50px_rgba(234,179,8,0.5)] transition-all duration-300 hover:scale-105">
-                            ابدأ تحقق أرباح الآن
+                            Start Earning Now
                         </button>
 
                         {/* Trust Badges */}
                         <div className="flex items-center gap-6 text-sm text-gray-500">
                             <div className="flex items-center gap-2">
                                 <ShieldCheck className="w-5 h-5 text-green-400" />
-                                <span>ضمان استرداد 30 يوم</span>
+                                <span>30-Day Money Back</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Clock className="w-5 h-5 text-yellow-400" />
-                                <span>نتائج في 24 ساعة</span>
+                                <span>Results in 24 Hours</span>
                             </div>
                         </div>
                     </motion.div>
@@ -120,7 +120,7 @@ export default function InstantIncomePage() {
                     >
                         <GlassPanel intensity="medium" className="p-6">
                             <h3 className="text-xl font-bold text-white mb-6">
-                                إيه اللي هتاخده؟
+                                What&apos;s Included?
                             </h3>
 
                             <ul className="space-y-4">
@@ -152,7 +152,7 @@ export default function InstantIncomePage() {
                 >
                     <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                         <TrendingUp className="w-5 h-5 text-green-400" />
-                        نتائج حقيقية من أعضاء الباقة
+                        Real Results from Our Members
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

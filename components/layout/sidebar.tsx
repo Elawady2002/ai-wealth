@@ -51,14 +51,14 @@ export function Sidebar() {
                         className="flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 text-yellow-500 hover:text-yellow-400 hover:bg-yellow-500/10"
                     >
                         <Crown className="w-5 h-5" />
-                        <span className="font-medium tracking-wide text-sm">Upgrade Access</span>
+                        <span className="font-medium tracking-wide text-sm font-(family-name:--font-display)">Upgrade Access</span>
                     </Link>
                     <Link
                         href="/settings"
                         className="flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5"
                     >
                         <Settings className="w-5 h-5" />
-                        <span className="font-medium tracking-wide text-sm">Calibration</span>
+                        <span className="font-medium tracking-wide text-sm font-(family-name:--font-display)">Calibration</span>
                     </Link>
                 </nav>
 
@@ -70,7 +70,7 @@ export function Sidebar() {
                                 JD
                             </div>
                             <div>
-                                <div className="text-sm font-bold text-white">John Doe</div>
+                                <div className="text-sm font-bold text-white font-(family-name:--font-display)">John Doe</div>
                                 <div className="text-xs text-gray-500">System Architect</div>
                             </div>
                         </div>

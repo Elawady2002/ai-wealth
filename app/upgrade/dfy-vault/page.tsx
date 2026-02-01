@@ -7,35 +7,35 @@ import { motion } from "framer-motion";
 
 const features = [
     {
-        title: "50+ صفحة هبوط احترافية",
-        description: "صفحات جاهزة للتحويل مصممة بأحدث معايير الـ UX",
+        title: "50+ High-Converting Landing Pages",
+        description: "Ready-to-use pages designed with the latest UX standards",
     },
     {
-        title: "قوالب إيميلات مربحة",
-        description: "سلسلة إيميلات كاملة تقدر تبدأ تستخدمها فوراً",
+        title: "Proven Email Sequences",
+        description: "Complete email funnels you can start using instantly",
     },
     {
-        title: "سكريبتات بيع متقدمة",
-        description: "نصوص مجربة ومضمونة لزيادة المبيعات",
+        title: "Advanced Sales Scripts",
+        description: "Tested and proven scripts to boost your conversions",
     },
     {
-        title: "تصميمات سوشيال ميديا",
-        description: "أكتر من 100 تصميم جاهز للنشر",
+        title: "Social Media Templates",
+        description: "100+ ready-to-publish designs for all platforms",
     },
     {
-        title: "فيديوهات ترويجية",
-        description: "فيديوهات قصيرة جاهزة للاستخدام",
+        title: "Promotional Videos",
+        description: "Short-form videos ready for immediate use",
     },
     {
-        title: "دعم فني متواصل",
-        description: "فريق دعم جاهز لمساعدتك في أي وقت",
+        title: "24/7 Premium Support",
+        description: "Our team is ready to help you anytime",
     },
 ];
 
 const bonuses = [
-    "كورس مجاني: أساسيات الأفلييت ماركتينج",
-    "جروب VIP حصري للأعضاء",
-    "تحديثات مجانية مدى الحياة",
+    "Free Course: Affiliate Marketing Fundamentals",
+    "Exclusive VIP Members Group",
+    "Lifetime Free Updates",
 ];
 
 export default function DFYVaultPage() {
@@ -48,7 +48,7 @@ export default function DFYVaultPage() {
                     className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" />
-                    <span>رجوع للباقات</span>
+                    <span>Back to Packages</span>
                 </Link>
 
                 {/* Hero Section */}
@@ -61,41 +61,41 @@ export default function DFYVaultPage() {
                         {/* Badge */}
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm">
                             <Rocket className="w-4 h-4" />
-                            <span>الباقة الأكثر شعبية</span>
+                            <span>Best Value Package</span>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter">
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tighter">
                             DFY Vault
                         </h1>
 
                         <p className="text-xl text-gray-400 leading-relaxed">
-                            مكتبة كاملة من الأصول الرقمية الجاهزة للاستخدام. كل اللي محتاجه عشان
-                            تبدأ تحقق أرباح من الأفلييت ماركتينج - جاهز ومستنيك.
+                            A complete library of done-for-you digital assets. Everything you need
+                            to start generating affiliate profits—ready and waiting for you.
                         </p>
 
                         {/* Price */}
                         <div className="flex items-baseline gap-4">
-                            <span className="text-5xl font-bold text-white">$97</span>
+                            <span className="text-5xl font-extrabold text-white">$97</span>
                             <span className="text-xl text-gray-500 line-through">$297</span>
-                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full">
-                                وفر 67%
+                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full font-medium">
+                                Save 67%
                             </span>
                         </div>
 
                         {/* CTA Button */}
                         <button className="w-full md:w-auto px-8 py-4 bg-linear-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(168,85,247,0.4)] hover:shadow-[0_15px_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105">
-                            احصل على DFY Vault الآن
+                            Get DFY Vault Now
                         </button>
 
                         {/* Trust Badges */}
                         <div className="flex items-center gap-6 text-sm text-gray-500">
                             <div className="flex items-center gap-2">
                                 <ShieldCheck className="w-5 h-5 text-green-400" />
-                                <span>ضمان استرداد 30 يوم</span>
+                                <span>30-Day Money Back</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Zap className="w-5 h-5 text-yellow-400" />
-                                <span>وصول فوري</span>
+                                <span>Instant Access</span>
                             </div>
                         </div>
                     </motion.div>
@@ -108,7 +108,7 @@ export default function DFYVaultPage() {
                     >
                         <GlassPanel intensity="medium" className="p-6">
                             <h3 className="text-xl font-bold text-white mb-6">
-                                إيه اللي هتاخده؟
+                                What&apos;s Included?
                             </h3>
 
                             <ul className="space-y-4">
@@ -142,7 +142,7 @@ export default function DFYVaultPage() {
                         <div className="flex items-center gap-3 mb-4">
                             <Gift className="w-6 h-6 text-yellow-400" />
                             <h3 className="text-xl font-bold text-white">
-                                بونص حصري لفترة محدودة
+                                Limited Time Exclusive Bonuses
                             </h3>
                         </div>
 
