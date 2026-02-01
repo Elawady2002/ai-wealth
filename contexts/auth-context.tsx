@@ -18,7 +18,12 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const publicRoutes = ["/login", "/signup", "/forgot-password", "/reset-password"];
+// Check if route is public (handles trailing slashes)
+const isPublicRoute = (pathname: string) => {
+    const publicPaths = ["/login", "/signup", "/forgot-password", "/reset-password"];
+    const normalizedPath = pathname.replace(/\/$/, "") || "/";
+    return publicPaths.some(path => normalizedPath === path || normalizedPath.endsWith(path));
+};
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
@@ -42,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setUser(session?.user ?? null);
                 setLoading(false);
 
-                if (event === "SIGNED_IN" && publicRoutes.includes(pathname)) {
+                if (event === "SIGNED_IN" && isPublicRoute(pathname)) {
                     router.push("/");
                 }
                 if (event === "SIGNED_OUT") {
@@ -54,14 +59,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription.unsubscribe();
     }, [pathname, router]);
 
-    // Route protection effect
+    // Route protection effect - DISABLED to allow navigation
+    // Protection is handled in the dashboard layout instead
     useEffect(() => {
-        if (!loading) {
-            const isPublicRoute = publicRoutes.includes(pathname);
-
-            if (!user && !isPublicRoute) {
-                router.push("/login");
-            }
+        // Only redirect to login if on a protected route and not loading
+        if (!loading && !user && !isPublicRoute(pathname)) {
+            // Let dashboard layout handle the redirect
         }
     }, [user, loading, pathname, router]);
 
