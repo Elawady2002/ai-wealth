@@ -40,7 +40,7 @@ const automationStats = [
 
 export default function AutomatedProfitsPage() {
     return (
-        <div className="min-h-screen font-[family-name:var(--font-display)]">
+        <div className="min-h-screen font-(family-name:--font-display)">
             <div className="space-y-8 pb-20">
                 {/* Back Button */}
                 <Link
@@ -84,7 +84,7 @@ export default function AutomatedProfitsPage() {
                         </div>
 
                         {/* CTA Button */}
-                        <button className="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(6,182,212,0.4)] hover:shadow-[0_15px_50px_rgba(6,182,212,0.5)] transition-all duration-300 hover:scale-105">
+                        <button className="w-full md:w-auto px-8 py-4 bg-linear-to-r from-cyan-500 to-blue-500 text-white font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(6,182,212,0.4)] hover:shadow-[0_15px_50px_rgba(6,182,212,0.5)] transition-all duration-300 hover:scale-105">
                             فعّل الأتمتة الكاملة
                         </button>
 

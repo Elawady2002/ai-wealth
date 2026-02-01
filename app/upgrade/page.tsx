@@ -58,7 +58,7 @@ const upgrades = [
 
 export default function UpgradePage() {
     return (
-        <div className="min-h-screen font-[family-name:var(--font-display)]">
+        <div className="min-h-screen font-(family-name:--font-display)">
             <div className="space-y-8 pb-20">
                 {/* Hero Section */}
                 <div className="text-center space-y-4 mb-12">
@@ -107,7 +107,7 @@ export default function UpgradePage() {
                                 >
                                     {/* Icon */}
                                     <div
-                                        className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${upgrade.color} flex items-center justify-center mb-4 shadow-lg`}
+                                        className={`w-14 h-14 rounded-2xl bg-linear-to-br ${upgrade.color} flex items-center justify-center mb-4 shadow-lg`}
                                         style={{ boxShadow: `0 10px 40px ${upgrade.glow}` }}
                                     >
                                         <upgrade.icon className="w-7 h-7 text-white" />

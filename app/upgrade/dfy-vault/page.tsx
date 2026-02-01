@@ -40,7 +40,7 @@ const bonuses = [
 
 export default function DFYVaultPage() {
     return (
-        <div className="min-h-screen font-[family-name:var(--font-display)]">
+        <div className="min-h-screen font-(family-name:--font-display)">
             <div className="space-y-8 pb-20">
                 {/* Back Button */}
                 <Link
@@ -83,7 +83,7 @@ export default function DFYVaultPage() {
                         </div>
 
                         {/* CTA Button */}
-                        <button className="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(168,85,247,0.4)] hover:shadow-[0_15px_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105">
+                        <button className="w-full md:w-auto px-8 py-4 bg-linear-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(168,85,247,0.4)] hover:shadow-[0_15px_50px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105">
                             احصل على DFY Vault الآن
                         </button>
 

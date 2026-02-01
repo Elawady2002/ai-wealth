@@ -45,10 +45,10 @@ export function FounderTransmission() {
                                 onClick={() => setIsPlaying(true)}
                             >
                                 {/* Background Grid Effect */}
-                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:30px_30px] opacity-30" />
+                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[30px_30px] opacity-30" />
 
                                 {/* Gradient Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
 
                                 {/* Play Button */}
                                 <div className="absolute inset-0 flex items-center justify-center">
@@ -57,7 +57,7 @@ export function FounderTransmission() {
                                         <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
 
                                         {/* Main Button */}
-                                        <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center shadow-[0_0_60px_rgba(0,242,255,0.4)] group-hover:shadow-[0_0_80px_rgba(0,242,255,0.6)] transition-all duration-500 group-hover:scale-110">
+                                        <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-linear-to-br from-primary to-cyan-400 flex items-center justify-center shadow-[0_0_60px_rgba(0,242,255,0.4)] group-hover:shadow-[0_0_80px_rgba(0,242,255,0.6)] transition-all duration-500 group-hover:scale-110">
                                             <Play className="w-10 h-10 md:w-14 md:h-14 text-black fill-black ml-2" />
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@ export function FounderTransmission() {
                                     <div className="text-xs uppercase tracking-[0.3em] text-primary mb-2 font-mono">
                                         🔴 رسالة من المؤسس
                                     </div>
-                                    <h2 className="text-2xl md:text-4xl font-bold text-white font-[family-name:var(--font-display)] tracking-tight mb-2">
+                                    <h2 className="text-2xl md:text-4xl font-bold text-white font-(family-name:--font-display) tracking-tight mb-2">
                                         &quot;أنت مش بتبني دخل... أنت بتزامنه.&quot;
                                     </h2>
                                     <p className="text-gray-400 text-sm md:text-base max-w-2xl">

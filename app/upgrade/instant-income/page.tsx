@@ -52,7 +52,7 @@ const testimonials = [
 
 export default function InstantIncomePage() {
     return (
-        <div className="min-h-screen font-[family-name:var(--font-display)]">
+        <div className="min-h-screen font-(family-name:--font-display)">
             <div className="space-y-8 pb-20">
                 {/* Back Button */}
                 <Link
@@ -95,7 +95,7 @@ export default function InstantIncomePage() {
                         </div>
 
                         {/* CTA Button */}
-                        <button className="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(234,179,8,0.4)] hover:shadow-[0_15px_50px_rgba(234,179,8,0.5)] transition-all duration-300 hover:scale-105">
+                        <button className="w-full md:w-auto px-8 py-4 bg-linear-to-r from-yellow-500 to-orange-500 text-black font-bold text-lg rounded-xl shadow-[0_10px_40px_rgba(234,179,8,0.4)] hover:shadow-[0_15px_50px_rgba(234,179,8,0.5)] transition-all duration-300 hover:scale-105">
                             ابدأ تحقق أرباح الآن
                         </button>
 
@@ -159,7 +159,7 @@ export default function InstantIncomePage() {
                         {testimonials.map((testimonial, i) => (
                             <GlassPanel key={i} intensity="low" className="p-4">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center font-bold text-black text-sm">
+                                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-yellow-500 to-orange-500 flex items-center justify-center font-bold text-black text-sm">
                                         {testimonial.avatar}
                                     </div>
                                     <div className="font-medium text-white">
