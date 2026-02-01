@@ -59,7 +59,7 @@ export function MetricsGrid() {
                     </div>
 
                     <div>
-                        <div className="text-2xl font-bold text-white mb-2">{metric.value}</div>
+                        <div className="text-3xl font-extrabold text-white mb-2 font-(family-name:--font-display) tracking-tight">{metric.value}</div>
                         <div className="text-xs text-gray-500 font-mono">
                             <span className="text-green-400">{metric.trend}</span> vs last sync
                         </div>
