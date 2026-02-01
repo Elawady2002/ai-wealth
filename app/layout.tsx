@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, Orbitron } from "next/font/google";
+import { Space_Grotesk, Syne } from "next/font/google";
 import "./globals.css";
 import { ParticleBackground } from "@/components/ui/particle-background";
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/top-bar";
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const orbitron = Orbitron({
+const syne = Syne({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Futuristic header font
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -32,8 +32,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body
         className={cn(
-          inter.variable,
-          orbitron.variable,
+          spaceGrotesk.variable,
+          syne.variable,
           "antialiased min-h-screen font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-hidden" // Set overflow hidden to handle scrolling in main
         )}
       >

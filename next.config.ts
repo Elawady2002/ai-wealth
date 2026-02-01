@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   basePath: "/ai-wealth",
+  assetPrefix: "/ai-wealth/",
+  trailingSlash: true,
 };
 
 export default nextConfig;
