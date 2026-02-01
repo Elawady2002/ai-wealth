@@ -2,17 +2,21 @@
 
 :root {
   /* AI Wealth Theme - Futuristic Dark Mode */
-  --background: #050507; /* Very deep blue-black */
+  --background: #050507;
+  /* Very deep blue-black */
   --foreground: #ededed;
-  
-  --primary: #00f2ff; /* Neon Cyan */
+
+  --primary: #00f2ff;
+  /* Neon Cyan */
   --primary-glow: rgba(0, 242, 255, 0.3);
-  
-  --secondary: #2aff00; /* Neon Green (Money) */
+
+  --secondary: #2aff00;
+  /* Neon Green (Money) */
   --secondary-glow: rgba(42, 255, 0, 0.3);
-  
-  --accent: #7d00ff; /* Electric Purple */
-  
+
+  --accent: #7d00ff;
+  /* Electric Purple */
+
   --glass-bg: rgba(255, 255, 255, 0.02);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-blur: 12px;
@@ -26,14 +30,20 @@
   --color-accent: var(--accent);
   --color-glass: var(--glass-bg);
   --color-glass-border: var(--glass-border);
-  
-  /* Extend animations here later if needed */
+
+  /* Font families */
+  --font-family-sans: var(--font-sans), 'Inter', sans-serif;
+  --font-family-display: var(--font-display), 'Poppins', sans-serif;
+  --font-family-heading: var(--font-heading), 'Montserrat', sans-serif;
+
+  /* Animations */
+  --animate-shimmer: shimmer 2s infinite;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   overflow-x: hidden;
 }
 
@@ -41,7 +51,8 @@ body {
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur)); /* Safari support */
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  /* Safari support */
   border: 1px solid var(--glass-border);
 }
 
@@ -51,4 +62,19 @@ body {
 
 .text-glow-secondary {
   text-shadow: 0 0 10px var(--secondary-glow);
+}
+
+/* Shimmer animation for promo banner */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }
