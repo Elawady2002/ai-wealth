@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Syne } from "next/font/google";
 import "./globals.css";
-import { ParticleBackground } from "@/components/ui/particle-background";
 import { cn } from "@/lib/utils";
-import { Sidebar } from "@/components/layout/sidebar";
-import { TopBar } from "@/components/layout/top-bar";
+import { AuthProvider } from "@/contexts/auth-context";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
@@ -34,25 +32,12 @@ export default function RootLayout({
         className={cn(
           spaceGrotesk.variable,
           syne.variable,
-          "antialiased min-h-screen font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-hidden" // Set overflow hidden to handle scrolling in main
+          "antialiased min-h-screen font-sans selection:bg-cyan-500/30 selection:text-cyan-200"
         )}
       >
-        <ParticleBackground />
-
-        <div className="flex min-h-screen relative z-10">
-          <Sidebar />
-
-          <div className="flex-1 flex flex-col h-screen overflow-hidden">
-            <TopBar />
-
-            {/* Main Content Area - Scrollable */}
-            <main className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 scroll-smooth">
-              <div className="max-w-7xl mx-auto w-full">
-                {children}
-              </div>
-            </main>
-          </div>
-        </div>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

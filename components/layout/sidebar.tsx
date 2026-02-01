@@ -1,10 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Zap, LayoutDashboard, Globe, Layers, Cpu, Crown, Settings } from "lucide-react";
+import { Zap, LayoutDashboard, Globe, Layers, Cpu, Crown, Settings, LogOut } from "lucide-react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
 
 const navItems = [
     { name: "Command Center", href: "/", icon: LayoutDashboard },
@@ -16,6 +17,10 @@ const navItems = [
 
 export function Sidebar() {
     const pathname = usePathname();
+    const { user, signOut } = useAuth();
+
+    const userInitials = user?.email ? user.email.substring(0, 2).toUpperCase() : "US";
+    const userEmail = user?.email || "user@example.com";
 
     return (
         <aside className="hidden md:flex flex-col w-72 border-r border-white/10 bg-black/20 backdrop-blur-md h-screen sticky top-0 z-50">
@@ -67,12 +72,19 @@ export function Sidebar() {
                     <div className="p-4 border-t border-white/5 bg-black/20 rounded-xl">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-blue-600 flex items-center justify-center font-bold text-black shadow-[0_0_15px_var(--primary-glow)]">
-                                JD
+                                {userInitials}
                             </div>
-                            <div>
-                                <div className="text-sm font-bold text-white font-(family-name:--font-display)">John Doe</div>
-                                <div className="text-xs text-gray-500">System Architect</div>
+                            <div className="flex-1 min-w-0">
+                                <div className="text-sm font-bold text-white font-(family-name:--font-display) truncate">{userEmail}</div>
+                                <div className="text-xs text-gray-500">Active Member</div>
                             </div>
+                            <button
+                                onClick={() => signOut()}
+                                className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                                title="Sign Out"
+                            >
+                                <LogOut className="w-4 h-4" />
+                            </button>
                         </div>
                     </div>
 
@@ -82,3 +94,4 @@ export function Sidebar() {
         </aside>
     );
 }
+
