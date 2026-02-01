@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useTheme } from "@/contexts/theme-context";
 
 const settingsSections = [
     {
@@ -50,7 +49,6 @@ const settingsSections = [
 
 export default function CalibrationPage() {
     const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({});
-    const { theme, setTheme } = useTheme();
 
     const handleToggle = (sectionTitle: string, settingName: string, initialState: boolean) => {
         const key = `${sectionTitle}-${settingName}`;
