@@ -39,10 +39,8 @@ export default function SignupPage() {
         if (error) {
             setError(error.message);
             setLoading(false);
-        } else {
-            setSuccess(true);
-            setLoading(false);
         }
+        // Success is handled by AuthContext - it will redirect automatically
     };
 
     if (success) {
