@@ -3,6 +3,7 @@
 import { ParticleBackground } from "@/components/ui/particle-background";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/top-bar";
+import { SupportWidget } from "@/components/ui/support-widget";
 import { useAuth } from "@/contexts/auth-context";
 import { Loader2 } from "lucide-react";
 
@@ -57,6 +58,10 @@ export default function DashboardLayout({
                     </main>
                 </div>
             </div>
+
+            {/* Support Widget */}
+            <SupportWidget />
         </div>
     );
 }
+
