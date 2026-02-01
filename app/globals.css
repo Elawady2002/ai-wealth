@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  /* AI Wealth Theme - Futuristic Dark Mode */
+  --background: #050507; /* Very deep blue-black */
+  --foreground: #ededed;
+  
+  --primary: #00f2ff; /* Neon Cyan */
+  --primary-glow: rgba(0, 242, 255, 0.3);
+  
+  --secondary: #2aff00; /* Neon Green (Money) */
+  --secondary-glow: rgba(42, 255, 0, 0.3);
+  
+  --accent: #7d00ff; /* Electric Purple */
+  
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 12px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-glass: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  
+  /* Extend animations here later if needed */
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Utility Class for Glassmorphism */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur)); /* Safari support */
+  border: 1px solid var(--glass-border);
+}
+
+.text-glow-primary {
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.text-glow-secondary {
+  text-shadow: 0 0 10px var(--secondary-glow);
+}
