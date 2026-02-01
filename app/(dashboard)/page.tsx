@@ -1,6 +1,7 @@
 import { FounderTransmission } from "@/components/dashboard/founder-transmission";
 import { MetricsGrid } from "@/components/dashboard/metrics-grid";
 import { SystemStatus } from "@/components/dashboard/system-status";
+import { DashboardCards } from "@/components/dashboard/dashboard-cards";
 
 export default function Home() {
   return (
@@ -20,8 +21,10 @@ export default function Home() {
         </div>
 
         <MetricsGrid />
+        <DashboardCards />
         <SystemStatus />
       </div>
     </div>
   );
 }
+
