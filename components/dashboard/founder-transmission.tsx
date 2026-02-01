@@ -31,7 +31,7 @@ export function FounderTransmission() {
                     <button
                         onClick={() => setIsVisible(false)}
                         className="absolute top-4 right-4 z-30 p-2 text-white/40 hover:text-white transition-colors rounded-full hover:bg-white/10 bg-black/40 backdrop-blur-sm"
-                        aria-label="إغلاق الفيديو"
+                        aria-label="Close video"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -66,13 +66,13 @@ export function FounderTransmission() {
                                 {/* Video Title Overlay */}
                                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                                     <div className="text-xs uppercase tracking-[0.3em] text-primary mb-2 font-mono">
-                                        🔴 رسالة من المؤسس
+                                        🔴 Message from the Founder
                                     </div>
                                     <h2 className="text-2xl md:text-4xl font-bold text-white font-(family-name:--font-display) tracking-tight mb-2">
-                                        &quot;أنت مش بتبني دخل... أنت بتزامنه.&quot;
+                                        &quot;You&apos;re not building income... You&apos;re synchronizing it.&quot;
                                     </h2>
                                     <p className="text-gray-400 text-sm md:text-base max-w-2xl">
-                                        اتفرج على الفيديو ده عشان تفهم إزاي الـ AI Wealth OS بيحول الروابط لأصول رقمية تشتغل وأنت نايم.
+                                        Watch this video to understand how AI Wealth OS transforms links into digital assets that work while you sleep.
                                     </p>
                                 </div>
                             </div>

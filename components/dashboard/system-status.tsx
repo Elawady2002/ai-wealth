@@ -29,7 +29,7 @@ export function SystemStatus() {
                         </div>
                         <div className="min-w-0">
                             <div className="text-[10px] uppercase text-gray-500 font-mono mb-0.5 truncate">{status.label}</div>
-                            <div className={`text-sm font-bold ${status.color} font-(family-name:--font-display) tracking-tight`}>{status.value}</div>
+                            <div className={`text-sm font-bold ${status.color} font-sans tracking-tight`}>{status.value}</div>
                         </div>
                     </div>
                 ))}

@@ -43,7 +43,7 @@ export default function TrafficPage() {
                         </div>
                         <h3 className="font-bold text-gray-200 font-(family-name:--font-display)">Broadcast Frequency</h3>
                     </div>
-                    <div className="text-3xl font-bold text-primary font-(family-name:--font-display)">142.5 MHz</div>
+                    <div className="text-3xl font-bold text-primary font-sans tabular-nums">142.5 MHz</div>
                     <div className="text-xs text-gray-500 mt-2 font-mono tracking-wider">OPTIMAL RANGE</div>
                 </GlassPanel>
 
@@ -54,7 +54,7 @@ export default function TrafficPage() {
                         </div>
                         <h3 className="font-bold text-gray-200 font-(family-name:--font-display)">Crawl Requests</h3>
                     </div>
-                    <div className="text-3xl font-bold text-white font-(family-name:--font-display)">28,912</div>
+                    <div className="text-3xl font-bold text-white font-sans tabular-nums">28,912</div>
                     <div className="text-xs text-green-400 mt-2 font-mono tracking-wider flex items-center gap-1">
                         <BarChart className="w-3 h-3" /> +12% LAST HOUR
                     </div>

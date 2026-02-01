@@ -48,20 +48,20 @@ export function BridgeCard({ title, url, status, traffic, signalStrength, earnin
             {/* Stats Grid */}
             <div className="p-5 grid grid-cols-3 gap-3">
                 <div className="bg-black/40 p-3 rounded-lg border border-white/5">
-                    <div className="text-[10px] text-gray-500 uppercase mb-1 font-(family-name:--font-display)">Traffic</div>
-                    <div className="text-sm font-bold text-white font-(family-name:--font-display)">{traffic}</div>
+                    <div className="text-[10px] text-gray-500 uppercase mb-1">Traffic</div>
+                    <div className="text-sm font-bold text-white font-sans tabular-nums">{traffic}</div>
                 </div>
                 <div className="bg-black/40 p-3 rounded-lg border border-white/5">
                     <div className="text-[10px] text-gray-500 uppercase mb-1 flex items-center gap-1">
                         Signal
                     </div>
-                    <div className={cn("text-sm font-bold flex items-center gap-1 font-(family-name:--font-display)", signalStrength > 80 ? "text-primary" : "text-yellow-500")}>
+                    <div className={cn("text-sm font-bold flex items-center gap-1 font-sans tabular-nums", signalStrength > 80 ? "text-primary" : "text-yellow-500")}>
                         {signalStrength}% <Zap className="w-3 h-3 fill-current" />
                     </div>
                 </div>
                 <div className="bg-black/40 p-3 rounded-lg border border-white/5">
-                    <div className="text-[10px] text-gray-500 uppercase mb-1 font-(family-name:--font-display)">Earned</div>
-                    <div className="text-sm font-bold text-green-400 font-(family-name:--font-display)">{earnings}</div>
+                    <div className="text-[10px] text-gray-500 uppercase mb-1">Earned</div>
+                    <div className="text-sm font-bold text-green-400 font-sans tabular-nums">{earnings}</div>
                 </div>
             </div>
 
