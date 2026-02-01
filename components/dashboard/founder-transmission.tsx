@@ -1,18 +1,22 @@
 "use client";
 
 import { GlassPanel } from "@/components/ui/glass-panel";
-import { X, Play, Volume2, VolumeX } from "lucide-react";
+import { X, Play } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/contexts/theme-context";
 
 export function FounderTransmission() {
     const [isVisible, setIsVisible] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
+    const { theme } = useTheme();
 
     if (!isVisible) return null;
 
     // Placeholder video - replace with actual video URL
     const videoId = "dQw4w9WgXcQ"; // Placeholder YouTube video ID
+
+    const isLight = theme === "light";
 
     return (
         <AnimatePresence>
@@ -25,19 +29,22 @@ export function FounderTransmission() {
             >
                 <GlassPanel
                     intensity="low"
-                    className="relative border-primary/20 p-0 overflow-hidden"
+                    className={`relative p-0 overflow-hidden ${isLight ? 'border-gray-300' : 'border-primary/20'}`}
                 >
                     {/* Close Button */}
                     <button
                         onClick={() => setIsVisible(false)}
-                        className="absolute top-4 right-4 z-30 p-2 text-white/40 hover:text-white transition-colors rounded-full hover:bg-white/10 bg-black/40 backdrop-blur-sm"
+                        className={`absolute top-4 right-4 z-30 p-2 transition-colors rounded-full backdrop-blur-sm ${isLight
+                                ? 'text-gray-500 hover:text-gray-800 hover:bg-gray-200/80 bg-white/80'
+                                : 'text-white/40 hover:text-white hover:bg-white/10 bg-black/40'
+                            }`}
                         aria-label="Close video"
                     >
                         <X className="w-5 h-5" />
                     </button>
 
                     {/* Video Container - 16:9 Aspect Ratio */}
-                    <div className="relative w-full aspect-video bg-black/80">
+                    <div className={`relative w-full aspect-video ${isLight ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-black/80'}`}>
                         {!isPlaying ? (
                             /* Thumbnail Overlay */
                             <div
@@ -45,33 +52,36 @@ export function FounderTransmission() {
                                 onClick={() => setIsPlaying(true)}
                             >
                                 {/* Background Grid Effect */}
-                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[30px_30px] opacity-30" />
+                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-size-[30px_30px] opacity-40" />
 
                                 {/* Gradient Overlay */}
-                                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
                                 {/* Play Button */}
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div className="relative">
                                         {/* Pulsing Ring */}
-                                        <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
+                                        <div className={`absolute inset-0 rounded-full animate-ping ${isLight ? 'bg-cyan-500/30' : 'bg-primary/20'}`} />
 
                                         {/* Main Button */}
-                                        <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-linear-to-br from-primary to-cyan-400 flex items-center justify-center shadow-[0_0_60px_rgba(0,242,255,0.4)] group-hover:shadow-[0_0_80px_rgba(0,242,255,0.6)] transition-all duration-500 group-hover:scale-110">
-                                            <Play className="w-10 h-10 md:w-14 md:h-14 text-black fill-black ml-2" />
+                                        <div className={`relative w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 ${isLight
+                                                ? 'bg-gradient-to-br from-cyan-500 to-blue-600 shadow-[0_0_60px_rgba(6,182,212,0.5)] group-hover:shadow-[0_0_80px_rgba(6,182,212,0.7)]'
+                                                : 'bg-linear-to-br from-primary to-cyan-400 shadow-[0_0_60px_rgba(0,242,255,0.4)] group-hover:shadow-[0_0_80px_rgba(0,242,255,0.6)]'
+                                            }`}>
+                                            <Play className="w-10 h-10 md:w-14 md:h-14 text-white fill-white ml-2" />
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Video Title Overlay */}
                                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                                    <div className="text-xs uppercase tracking-[0.3em] text-primary mb-2 font-mono">
+                                    <div className={`text-xs uppercase tracking-[0.3em] mb-2 font-mono ${isLight ? 'text-cyan-400' : 'text-primary'}`}>
                                         🔴 Message from the Founder
                                     </div>
                                     <h2 className="text-2xl md:text-4xl font-bold text-white font-(family-name:--font-display) tracking-tight mb-2">
                                         &quot;You&apos;re not building income... You&apos;re synchronizing it.&quot;
                                     </h2>
-                                    <p className="text-gray-400 text-sm md:text-base max-w-2xl">
+                                    <p className="text-gray-300 text-sm md:text-base max-w-2xl">
                                         Watch this video to understand how AI Wealth OS transforms links into digital assets that work while you sleep.
                                     </p>
                                 </div>
@@ -92,3 +102,4 @@ export function FounderTransmission() {
         </AnimatePresence>
     );
 }
+
