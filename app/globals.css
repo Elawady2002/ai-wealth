@@ -19,27 +19,31 @@
 
   --card-bg: rgba(0, 0, 0, 0.4);
   --text-muted: #6b7280;
+  --text-secondary: #9ca3af;
+  --sidebar-bg: rgba(0, 0, 0, 0.6);
 }
 
 /* Light Mode */
 .light {
-  --background: #f8fafc;
+  --background: #f1f5f9;
   --foreground: #0f172a;
 
-  --primary: #0891b2;
-  --primary-glow: rgba(8, 145, 178, 0.3);
+  --primary: #0284c7;
+  --primary-glow: rgba(2, 132, 199, 0.2);
 
   --secondary: #059669;
-  --secondary-glow: rgba(5, 150, 105, 0.3);
+  --secondary-glow: rgba(5, 150, 105, 0.2);
 
-  --accent: #7c3aed;
+  --accent: #6d28d9;
 
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(0, 0, 0, 0.12);
   --glass-blur: 12px;
 
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --text-muted: #64748b;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-muted: #475569;
+  --text-secondary: #64748b;
+  --sidebar-bg: rgba(255, 255, 255, 0.95);
 }
 
 @theme inline {
@@ -100,20 +104,207 @@ body {
   animation: shimmer 2s infinite;
 }
 
-/* Light mode specific overrides */
+/* ===== LIGHT MODE COMPREHENSIVE OVERRIDES ===== */
+
+/* Backgrounds */
 .light .bg-black {
-  background-color: var(--background);
+  background-color: var(--background) !important;
 }
 
+.light .bg-black\/20,
+.light .bg-black\/30,
+.light .bg-black\/40,
+.light .bg-black\/50,
+.light .bg-black\/60,
+.light .bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Sidebar */
+.light aside {
+  background-color: var(--sidebar-bg) !important;
+  border-color: var(--glass-border) !important;
+}
+
+/* Text Colors - Dark text for light mode */
 .light .text-white {
-  color: var(--foreground);
+  color: #0f172a !important;
+}
+
+.light .text-gray-100,
+.light .text-gray-200,
+.light .text-gray-300 {
+  color: #1e293b !important;
 }
 
 .light .text-gray-400 {
-  color: var(--text-muted);
+  color: #475569 !important;
 }
 
+.light .text-gray-500 {
+  color: #64748b !important;
+}
+
+.light .text-gray-600 {
+  color: #475569 !important;
+}
+
+/* Borders */
 .light .border-white\/5,
-.light .border-white\/10 {
-  border-color: var(--glass-border);
+.light .border-white\/10,
+.light .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Glass Panels in Light Mode */
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Cards and Panels */
+.light .bg-white\/5,
+.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+.light .hover\:bg-white\/5:hover,
+.light .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Primary color adjustments */
+.light .text-primary {
+  color: #0284c7 !important;
+}
+
+.light .bg-primary\/10,
+.light .bg-primary\/20 {
+  background-color: rgba(2, 132, 199, 0.1) !important;
+}
+
+/* Green/Success colors */
+.light .text-green-400,
+.light .text-green-500 {
+  color: #059669 !important;
+}
+
+.light .bg-green-500\/20 {
+  background-color: rgba(5, 150, 105, 0.15) !important;
+}
+
+/* Yellow/Warning colors */
+.light .text-yellow-400,
+.light .text-yellow-500 {
+  color: #d97706 !important;
+}
+
+.light .bg-yellow-500\/10,
+.light .bg-yellow-500\/20 {
+  background-color: rgba(217, 119, 6, 0.12) !important;
+}
+
+/* Purple/Accent colors */
+.light .text-purple-400 {
+  color: #7c3aed !important;
+}
+
+.light .bg-purple-500\/10 {
+  background-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+/* Cyan colors */
+.light .text-cyan-400,
+.light .text-cyan-500 {
+  color: #0891b2 !important;
+}
+
+/* Red/Danger colors */
+.light .text-red-400 {
+  color: #dc2626 !important;
+}
+
+.light .bg-red-500\/5,
+.light .bg-red-500\/10 {
+  background-color: rgba(220, 38, 38, 0.08) !important;
+}
+
+.light .border-red-500\/20 {
+  border-color: rgba(220, 38, 38, 0.2) !important;
+}
+
+/* Inputs */
+.light input,
+.light textarea {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #0f172a !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Buttons */
+.light button.bg-primary {
+  background-color: #0284c7 !important;
+}
+
+/* Scrollbar for light mode */
+.light ::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Links */
+.light a.text-primary:hover {
+  color: #0369a1 !important;
+}
+
+/* Shadow adjustments */
+.light .shadow-\[0_0_20px_rgba\(255\,255\,255\,0\.05\)\] {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.light .shadow-\[0_0_10px_var\(--primary\)\],
+.light .shadow-\[0_0_15px_var\(--primary-glow\)\] {
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.2) !important;
+}
+
+/* Top Bar */
+.light header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Promo Banner - keep colorful */
+.light .bg-linear-to-r.from-emerald-500 {
+  background: linear-gradient(to right, #10b981, #059669, #0d9488) !important;
+}
+
+/* Metrics cards text */
+.light .tabular-nums {
+  color: #0f172a !important;
+}
+
+/* Status indicators */
+.light .bg-green-500 {
+  background-color: #10b981 !important;
+}
+
+.light .bg-yellow-500 {
+  background-color: #f59e0b !important;
+}
+
+.light .bg-red-500 {
+  background-color: #ef4444 !important;
 }
