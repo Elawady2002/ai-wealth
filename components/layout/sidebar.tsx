@@ -24,7 +24,7 @@ export function Sidebar() {
 
     return (
         <aside className="hidden md:flex flex-col w-72 border-r border-white/10 bg-black/20 backdrop-blur-md h-screen sticky top-0 z-50">
-            <GlassPanel intensity="high" className="h-full border-r border-white/5 bg-black/60 flex flex-col relative z-20">
+            <GlassPanel intensity="high" className="h-full border-r border-white/5 bg-black/60 flex flex-col relative z-20 rounded-none">
                 <div className="p-6 pb-2 border-b border-white/5">
                     <h1 className="text-2xl font-bold font-(family-name:--font-display) tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-white to-gray-500">
                         AI WEALTH <span className="text-primary text-xs ml-1 align-top relative top-1">OS</span>
