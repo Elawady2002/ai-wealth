@@ -4,7 +4,8 @@ import type { NextConfig } from "next";
 const isGitHubPages = process.env.NODE_ENV === "production" && !process.env.VERCEL;
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // Remove static export for Vercel - it disables API routes!
+  // Only use static export when building for GitHub Pages manually
   images: {
     unoptimized: true,
   },
