@@ -9,11 +9,18 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/auth-context";
 
-interface BridgePreviewProps {
-    url: string;
+interface ScrapedData {
+    title: string;
+    description: string;
+    image: string | null;
 }
 
-export function BridgePreview({ url }: BridgePreviewProps) {
+interface BridgePreviewProps {
+    url: string;
+    data?: ScrapedData | null;
+}
+
+export function BridgePreview({ url, data }: BridgePreviewProps) {
     const [broadcasted, setBroadcasted] = useState(false);
     const [saving, setSaving] = useState(false);
     const router = useRouter();
@@ -37,7 +44,7 @@ export function BridgePreview({ url }: BridgePreviewProps) {
         try {
             const { error } = await supabase.from('bridges').insert({
                 user_id: user?.id,
-                title: `Bridge - ${getDomain(url)}`,
+                title: data?.title || `Bridge - ${getDomain(url)}`,
                 affiliate_url: url,
                 status: 'indexing',
                 traffic: '0',
@@ -58,7 +65,7 @@ export function BridgePreview({ url }: BridgePreviewProps) {
     };
 
     return (
-        <div className="min-h-screen pb-20 w-full">
+        <div className="min-h-screen pb-20 w-full flex flex-col items-center">
             {/* Success Banner */}
             <motion.div
                 initial={{ y: -20, opacity: 0 }}
@@ -73,10 +80,12 @@ export function BridgePreview({ url }: BridgePreviewProps) {
             </motion.div>
 
             {/* PREVIEW CONTAINER */}
-            <div className="mb-12 w-full px-4 md:px-8">
-                {/* Browser Frame */}
-                <div className="bg-[#0f1115] rounded-t-2xl border border-white/10 border-b-0 shadow-2xl w-full">
-                    <div className="flex items-center px-6 py-4 gap-4">
+            {/* We force a fixed width container for the "Desktop" look, then scale it down to fit the parent */}
+            <div className="mb-12 w-full px-4 md:px-8 flex justify-center overflow-hidden">
+                <div className="relative w-full max-w-[1200px] bg-[#0f1115] rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+
+                    {/* Browser Toolbar */}
+                    <div className="flex items-center px-6 py-4 gap-4 bg-[#0f1115] border-b border-white/5 z-20 relative">
                         <div className="flex gap-2.5">
                             <div className="w-3.5 h-3.5 rounded-full bg-[#FF5F57] hover:bg-[#FF5F57]/80 transition-colors" />
                             <div className="w-3.5 h-3.5 rounded-full bg-[#FEBC2E] hover:bg-[#FEBC2E]/80 transition-colors" />
@@ -87,11 +96,10 @@ export function BridgePreview({ url }: BridgePreviewProps) {
                             <span className="truncate max-w-[calc(100%-20px)] group-hover:text-gray-300 transition-colors">{url || "https://wealth-bridge.com/your-offer"}</span>
                         </div>
                     </div>
-                </div>
 
-                {/* Website Content - Modern VSL Style */}
-                <div className="bg-white rounded-b-2xl border border-white/10 border-t-0 overflow-hidden shadow-2xl relative w-full">
-                    <div className="w-full">
+                    {/* Scalable Content Area */}
+                    {/* This div simulates the desktop viewport */}
+                    <div className="w-full relative bg-white h-[600px] overflow-y-auto scrollbar-hide">
                         {/* Hero Section */}
                         <div className="bg-linear-to-b from-slate-50 to-white py-16 px-4 text-center">
                             <div className="max-w-5xl mx-auto space-y-8">
@@ -104,12 +112,18 @@ export function BridgePreview({ url }: BridgePreviewProps) {
                                 </div>
 
                                 <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight">
-                                    The <span className="bg-clip-text text-transparent bg-linear-to-r from-red-600 to-orange-600">"Silent Architecture"</span> That<br className="hidden md:block" />
-                                    Generates Wealth While You Sleep
+                                    {data?.title ? (
+                                        <span>{data.title}</span>
+                                    ) : (
+                                        <>
+                                            The <span className="bg-clip-text text-transparent bg-linear-to-r from-red-600 to-orange-600">"Silent Architecture"</span> That<br className="hidden md:block" />
+                                            Generates Wealth While You Sleep
+                                        </>
+                                    )}
                                 </h1>
 
                                 <p className="text-xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
-                                    Watch the private briefing below to discover the automated system banking $1,200+ daily for ordinary people.
+                                    {data?.description ? data.description : "Watch the private briefing below to discover the automated system banking $1,200+ daily for ordinary people."}
                                 </p>
                             </div>
                         </div>
@@ -119,7 +133,14 @@ export function BridgePreview({ url }: BridgePreviewProps) {
                             <div className="max-w-5xl mx-auto">
                                 <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl shadow-slate-900/20 group cursor-pointer border-4 border-white ring-1 ring-slate-900/10">
                                     {/* Video Placeholder Content */}
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                    {data?.image && (
+                                        <img
+                                            src={data.image}
+                                            alt="Preview"
+                                            className="absolute inset-0 w-full h-full object-cover opacity-50"
+                                        />
+                                    )}
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
                                         <div className="w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/20 shadow-lg">
                                             <Play className="w-10 h-10 text-white fill-white ml-2" />
                                         </div>
@@ -127,7 +148,7 @@ export function BridgePreview({ url }: BridgePreviewProps) {
                                     </div>
 
                                     {/* Video Controls Mockup */}
-                                    <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/10">
+                                    <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/10 z-20">
                                         <div className="h-full w-1/3 bg-red-600 relative">
                                             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-red-600 rounded-full shadow-lg scale-0 group-hover:scale-100 transition-transform" />
                                         </div>
@@ -164,7 +185,7 @@ export function BridgePreview({ url }: BridgePreviewProps) {
             </div>
 
             {/* CONTROLS - REFINED DESIGN */}
-            <div className="w-full px-4 md:px-8">
+            <div className="w-full px-4 md:px-8 max-w-7xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
 
                     {/* Status Card 1 */}

@@ -4,8 +4,10 @@ import { GlassPanel } from "@/components/ui/glass-panel";
 import { TrendingUp, Activity, Users, DollarSign } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/contexts/auth-context";
 
-// Hook for animated counter
+// ... existing useCountUp hook ...
 function useCountUp(end: number, duration: number = 2000, start: number = 0) {
     const [count, setCount] = useState(start);
     const [isVisible, setIsVisible] = useState(false);
@@ -38,7 +40,6 @@ function useCountUp(end: number, duration: number = 2000, start: number = 0) {
             if (!startTime) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / duration, 1);
 
-            // Easing function for smooth animation
             const easeOutQuart = 1 - Math.pow(1 - progress, 4);
             const currentValue = start + (end - start) * easeOutQuart;
 
@@ -57,7 +58,7 @@ function useCountUp(end: number, duration: number = 2000, start: number = 0) {
     return { count, ref };
 }
 
-// Format number based on type
+// ... existing formatValue function ...
 function formatValue(value: number, type: string): string {
     if (type === "currency") {
         return `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -77,44 +78,20 @@ function formatValue(value: number, type: string): string {
     return value.toString();
 }
 
-const metrics = [
-    {
-        label: "Estimated Daily Flow",
-        numericValue: 1240.50,
-        displayValue: "$1,240.50",
-        valueType: "currency",
-        trend: "+12.5%",
-        icon: DollarSign,
-        color: "text-secondary",
-        shadow: "shadow-secondary/20",
-        graph: "from-secondary/50 to-transparent",
-    },
-    {
-        label: "Est. Active Bridges",
-        numericValue: 8,
-        displayValue: "8",
-        valueType: "number",
-        trend: "+2 this week",
-        icon: Activity,
-        color: "text-primary",
-        shadow: "shadow-primary/20",
-        graph: "from-primary/50 to-transparent",
-    },
-    {
-        label: "Traffic Pulse",
-        numericValue: 14200,
-        displayValue: "14.2k",
-        valueType: "traffic",
-        trend: "+8.1%",
-        icon: Users,
-        color: "text-accent",
-        shadow: "shadow-accent/20",
-        graph: "from-accent/50 to-transparent",
-    },
-];
+interface Metric {
+    label: string;
+    numericValue: number;
+    displayValue: string;
+    valueType: string;
+    trend: string;
+    icon: any;
+    color: string;
+    shadow: string;
+    graph: string;
+}
 
-function MetricCard({ metric, index }: { metric: typeof metrics[0]; index: number }) {
-    const { count, ref } = useCountUp(metric.numericValue, 2000 + index * 200);
+function MetricCard({ metric, index }: { metric: Metric; index: number }) {
+    const { count, ref } = useCountUp(metric.numericValue, 2000 + index * 200, 0);
 
     return (
         <motion.div
@@ -167,6 +144,77 @@ function MetricCard({ metric, index }: { metric: typeof metrics[0]; index: numbe
 }
 
 export function MetricsGrid() {
+    const { user } = useAuth();
+    const [metrics, setMetrics] = useState<Metric[]>([
+        {
+            label: "Estimated Daily Flow",
+            numericValue: 0,
+            displayValue: "$0.00",
+            valueType: "currency",
+            trend: "+0%",
+            icon: DollarSign,
+            color: "text-secondary",
+            shadow: "shadow-secondary/20",
+            graph: "from-secondary/50 to-transparent",
+        },
+        {
+            label: "Est. Active Bridges",
+            numericValue: 0,
+            displayValue: "0",
+            valueType: "number",
+            trend: "+0 this week",
+            icon: Activity,
+            color: "text-primary",
+            shadow: "shadow-primary/20",
+            graph: "from-primary/50 to-transparent",
+        },
+        {
+            label: "Traffic Pulse",
+            numericValue: 0,
+            displayValue: "0",
+            valueType: "traffic",
+            trend: "+0%",
+            icon: Users,
+            color: "text-accent",
+            shadow: "shadow-accent/20",
+            graph: "from-accent/50 to-transparent",
+        },
+    ]);
+
+    useEffect(() => {
+        const fetchMetrics = async () => {
+            if (!user) return;
+
+            try {
+                // Fetch active bridges count
+                const { count, error } = await supabase
+                    .from('bridges')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                const bridgeCount = count || 0;
+
+                setMetrics(prev => [
+                    prev[0], // Keep daily flow as 0 for now
+                    {
+                        ...prev[1],
+                        numericValue: bridgeCount,
+                        displayValue: bridgeCount.toString(),
+                        trend: `${bridgeCount > 0 ? '+' + bridgeCount : '0'} total`
+                    },
+                    prev[2] // Keep traffic pulse as 0 for now
+                ]);
+
+            } catch (error) {
+                console.error('Error fetching metrics:', error);
+            }
+        };
+
+        fetchMetrics();
+    }, [user]);
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {metrics.map((metric, index) => (

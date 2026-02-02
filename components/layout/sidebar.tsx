@@ -121,14 +121,7 @@ export function Sidebar() {
                         </div>
                     </div>
 
-                    <div className="px-4 text-xs font-mono text-gray-500 uppercase tracking-widest mb-4 mt-6">System</div>
-                    <Link
-                        href="/settings"
-                        className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-transparent transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 hover:border-gray-500/30 hover:shadow-[0_0_15px_rgba(156,163,175,0.15)] group"
-                    >
-                        <Settings className="w-5 h-5 group-hover:text-gray-300" />
-                        <span className="font-medium tracking-wide text-sm font-(family-name:--font-display)">Calibration</span>
-                    </Link>
+
                 </nav>
 
                 <div className="p-4 mt-auto">

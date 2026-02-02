@@ -8,14 +8,69 @@ import { NeuralScan } from "./neural-scan";
 import { BridgePreview } from "./bridge-preview";
 import { Zap } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/contexts/auth-context";
 
 export function SyncWizard() {
+    const { user } = useAuth();
     const [status, setStatus] = useState<"idle" | "scanning" | "complete">("idle");
     const [url, setUrl] = useState("");
+    const [scrapedData, setScrapedData] = useState<{ title: string; description: string; image: string | null } | null>(null);
 
-    const handleSync = () => {
+    const handleSync = async () => {
         if (!url) return;
         setStatus("scanning");
+
+        // Start fetching data in parallel with the animation
+        try {
+            const response = await fetch('/api/analyze-url', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+            const result = await response.json();
+            if (result.success && result.data) {
+                setScrapedData(result.data);
+            }
+        } catch (error) {
+            console.error("Failed to analyze URL", error);
+        }
+    };
+
+    const handleScanComplete = async () => {
+        if (!user || !url) {
+            setStatus("complete");
+            return;
+        }
+
+        try {
+            // Use scraped title if available, otherwise generate one
+            let title = scrapedData?.title || "Wealth Bridge";
+            if (!scrapedData?.title) {
+                try {
+                    const hostname = new URL(url).hostname;
+                    const domain = hostname.replace('www.', '').split('.')[0];
+                    title = `Bridge - ${domain.charAt(0).toUpperCase() + domain.slice(1)}`;
+                } catch (e) {
+                    // Keep default title
+                }
+            }
+
+            // Save to Supabase
+            const { error } = await supabase.from('bridges').insert({
+                user_id: user.id,
+                title: title,
+                affiliate_url: url,
+                status: 'active'
+            });
+
+            if (error) throw error;
+
+        } catch (error) {
+            console.error("Error saving bridge:", error);
+        } finally {
+            setStatus("complete");
+        }
     };
 
     return (
@@ -28,7 +83,7 @@ export function SyncWizard() {
                     exit={{ opacity: 0, scale: 1.05 }}
                     className="w-full max-w-4xl mx-auto"
                 >
-                    <NeuralScan onComplete={() => setStatus("complete")} />
+                    <NeuralScan onComplete={handleScanComplete} />
                 </motion.div>
             )}
 
@@ -39,7 +94,7 @@ export function SyncWizard() {
                     animate={{ opacity: 1 }}
                     className="w-full" // Allows full width expansion
                 >
-                    <BridgePreview url={url} />
+                    <BridgePreview url={url} data={scrapedData} />
                 </motion.div>
             )}
 
