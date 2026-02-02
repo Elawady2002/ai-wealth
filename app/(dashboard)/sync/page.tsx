@@ -6,7 +6,7 @@ export default function SyncPage() {
         <div className="min-h-[calc(100vh-100px)] flex flex-col items-center justify-center font-(family-name:--font-display) py-12">
             {/* Header Section - Always centered and constrained for readability */}
             <div className="w-full max-w-4xl mx-auto px-4 mb-2">
-                <div className="text-center space-y-4 mb-8">
+                <div className="text-center space-y-4 mb-2">
                     <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-linear-to-b from-white to-gray-400 tracking-tighter">
                         SYNC WIZARD
                     </h1>
@@ -15,7 +15,7 @@ export default function SyncPage() {
                     </p>
                 </div>
 
-                <div className="mb-8 max-w-xl mx-auto">
+                <div className="mb-4 max-w-xl mx-auto">
                     <ContextualDocs title="How to Sync Your Link" variant="help">
                         <ol className="list-decimal list-inside space-y-1 mt-1">
                             <li><strong>Step 1:</strong> Paste any affiliate URL in the box below</li>

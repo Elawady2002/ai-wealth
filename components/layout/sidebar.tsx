@@ -107,7 +107,7 @@ export function Sidebar() {
                                 return (
                                     <Link key={item.name} href={item.href} className="block group">
                                         <div className={cn(
-                                            "flex items-center gap-3 px-4 py-3 rounded-full border transition-all duration-300",
+                                            "flex items-center justify-center gap-3 px-4 py-3 rounded-full border transition-all duration-300",
                                             isActive
                                                 ? "bg-yellow-500/20 border-yellow-500/50 text-yellow-400 shadow-[0_0_15px_rgba(234,179,8,0.2)]"
                                                 : "bg-black/30 border-white/10 text-gray-300 hover:bg-yellow-500/10 hover:border-yellow-500/30 hover:text-yellow-400 hover:shadow-[0_0_15px_rgba(234,179,8,0.15)]"
