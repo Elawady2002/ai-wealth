@@ -2,6 +2,7 @@
 
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { NeonButton } from "@/components/ui/neon-button";
+import { ContextualDocs } from "@/components/ui/contextual-docs";
 import {
     Settings,
     Bell,
@@ -65,8 +66,16 @@ export default function CalibrationPage() {
 
     return (
         <div className="min-h-screen font-(family-name:--font-display)">
+            <ContextualDocs title="Customizing Your Experience" variant="tips">
+                <p>Adjust settings to personalize how the system works for you:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li><strong>Toggle switches:</strong> Click to turn features on or off</li>
+                    <li><strong>Save Changes:</strong> Click the button at the bottom to apply your settings</li>
+                </ul>
+            </ContextualDocs>
+
             {/* Header */}
-            <div className="mb-8">
+            <div className="mb-8 mt-6">
                 <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 rounded-lg bg-gray-500/10 flex items-center justify-center">
                         <Settings className="w-5 h-5 text-gray-400" />

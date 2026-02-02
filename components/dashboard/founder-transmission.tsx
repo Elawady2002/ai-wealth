@@ -63,18 +63,7 @@ export function FounderTransmission() {
                                     </div>
                                 </div>
 
-                                {/* Video Title Overlay */}
-                                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                                    <div className="text-xs uppercase tracking-[0.3em] text-primary mb-2 font-mono">
-                                        🔴 Message from the Founder
-                                    </div>
-                                    <h2 className="text-2xl md:text-4xl font-bold text-white font-(family-name:--font-display) tracking-tight mb-2">
-                                        &quot;You&apos;re not building income... You&apos;re synchronizing it.&quot;
-                                    </h2>
-                                    <p className="text-gray-300 text-sm md:text-base max-w-2xl">
-                                        Watch this video to understand how AI Wealth OS transforms links into digital assets that work while you sleep.
-                                    </p>
-                                </div>
+                                { /* Text Overlay Removed */}
                             </div>
                         ) : (
                             /* Embedded Video */

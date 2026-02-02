@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Menu, X, LayoutDashboard, Zap, Layers, Globe, Cpu, Crown } from "lucide-react";
+import { User, Menu, X, LayoutDashboard, Zap, Layers, Globe, GraduationCap, Sparkles, Vault, Rocket, Settings } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,8 +12,13 @@ const navItems = [
     { name: "Sync Wizard", href: "/sync", icon: Zap, highlight: true },
     { name: "My Bridges", href: "/bridges", icon: Layers },
     { name: "Traffic Hub", href: "/traffic", icon: Globe },
-    { name: "Conversion AI", href: "/conversion", icon: Cpu },
-    { name: "Upgrade", href: "/upgrade", icon: Crown, variant: "gold" },
+    { name: "Training", href: "/training", icon: GraduationCap },
+];
+
+const premiumItems = [
+    { name: "DFY Vault", href: "/upgrade/dfy-vault", icon: Vault },
+    { name: "Instant Income", href: "/upgrade/instant-income", icon: Sparkles },
+    { name: "Automated Income", href: "/upgrade/automated-profits", icon: Rocket },
 ];
 
 export function TopBar() {
@@ -88,6 +93,48 @@ export function TopBar() {
                                     </Link>
                                 );
                             })}
+
+                            {/* Premium Features Section */}
+                            <div className="mt-6 p-4 rounded-xl border border-yellow-500/30 bg-yellow-500/5">
+                                <div className="flex items-center gap-2 text-yellow-400 text-xs font-bold uppercase tracking-wider mb-4">
+                                    <Sparkles className="w-4 h-4" />
+                                    Premium Features
+                                </div>
+                                <div className="space-y-2">
+                                    {premiumItems.map((item) => {
+                                        const isActive = pathname === item.href;
+                                        return (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                onClick={() => setIsMenuOpen(false)}
+                                            >
+                                                <div className={cn(
+                                                    "flex items-center gap-3 px-4 py-3 rounded-full border transition-all duration-300",
+                                                    isActive
+                                                        ? "bg-white/10 border-white/30 text-white"
+                                                        : "bg-black/30 border-white/10 text-gray-300"
+                                                )}>
+                                                    <item.icon className="w-4 h-4" />
+                                                    <span className="text-sm font-medium">{item.name}</span>
+                                                </div>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Settings */}
+                            <div className="mt-6">
+                                <Link
+                                    href="/settings"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5"
+                                >
+                                    <Settings className="w-6 h-6" />
+                                    <span className="font-medium tracking-wide text-lg font-(family-name:--font-display)">Calibration</span>
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="p-6 border-t border-white/10 bg-white/5">

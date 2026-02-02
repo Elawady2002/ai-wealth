@@ -79,7 +79,7 @@ function formatValue(value: number, type: string): string {
 
 const metrics = [
     {
-        label: "Daily Flow",
+        label: "Estimated Daily Flow",
         numericValue: 1240.50,
         displayValue: "$1,240.50",
         valueType: "currency",
@@ -90,7 +90,7 @@ const metrics = [
         graph: "from-secondary/50 to-transparent",
     },
     {
-        label: "Active Bridges",
+        label: "Est. Active Bridges",
         numericValue: 8,
         displayValue: "8",
         valueType: "number",
@@ -111,17 +111,6 @@ const metrics = [
         shadow: "shadow-accent/20",
         graph: "from-accent/50 to-transparent",
     },
-    {
-        label: "Signal Strength",
-        numericValue: 94,
-        displayValue: "94%",
-        valueType: "percentage",
-        trend: "Optimal",
-        icon: TrendingUp,
-        color: "text-green-400",
-        shadow: "shadow-green-400/20",
-        graph: "from-green-400/50 to-transparent",
-    },
 ];
 
 function MetricCard({ metric, index }: { metric: typeof metrics[0]; index: number }) {
@@ -135,7 +124,7 @@ function MetricCard({ metric, index }: { metric: typeof metrics[0]; index: numbe
         >
             <GlassPanel
                 intensity="low"
-                className="p-5 flex flex-col justify-between group hover:bg-white/5 transition-colors border-white/5"
+                className="p-5 flex flex-col justify-between group hover:bg-white/5 transition-all duration-500 border-white/5 hover:border-primary/30 hover:shadow-[0_0_25px_rgba(0,255,170,0.15)]"
             >
                 <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest font-(family-name:--font-display)">
@@ -179,7 +168,7 @@ function MetricCard({ metric, index }: { metric: typeof metrics[0]; index: numbe
 
 export function MetricsGrid() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {metrics.map((metric, index) => (
                 <MetricCard key={metric.label} metric={metric} index={index} />
             ))}
