@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[66122,["/ai-wealth/_next/static/chunks/6e512992c62f8321.js","/ai-wealth/_next/static/chunks/b5cc9007a9ced770.js","/ai-wealth/_next/static/chunks/b67c522da649529a.js","/ai-wealth/_next/static/chunks/0dad26925db981ba.js","/ai-wealth/_next/static/chunks/590e3d431258961f.js"],"ContentVault"]
+2:I[66122,["/ai-wealth/_next/static/chunks/6e512992c62f8321.js","/ai-wealth/_next/static/chunks/b5cc9007a9ced770.js","/ai-wealth/_next/static/chunks/5cb4fe1ff8fb9dc3.js","/ai-wealth/_next/static/chunks/0dad26925db981ba.js","/ai-wealth/_next/static/chunks/590e3d431258961f.js"],"ContentVault"]
 3:I[97367,["/ai-wealth/_next/static/chunks/ff1a16fafef87110.js","/ai-wealth/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"buildId":"nMIdrxD0yUTCySoHf_wsn","rsc":["$","$1","c",{"children":[["$","$L2",null,{"vaultId":"automated-profits"}],[["$","script","script-0",{"src":"/ai-wealth/_next/static/chunks/590e3d431258961f.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"fw3fQEkT5WC4Sk5ckvXnM","rsc":["$","$1","c",{"children":[["$","$L2",null,{"vaultId":"automated-profits"}],[["$","script","script-0",{"src":"/ai-wealth/_next/static/chunks/590e3d431258961f.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
