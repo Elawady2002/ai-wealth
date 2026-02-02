@@ -22,8 +22,12 @@ export async function POST(request: NextRequest) {
 
         // STEP 1: Scrape the target URL to get actual page content
         let pageContext = '';
+        let hasGoodContent = false;
+
         if (scraperApiKey && targetUrl) {
             try {
+                console.log('[CommentGen] Scraping URL:', targetUrl);
+
                 const scraperUrl = `http://api.scraperapi.com/?api_key=${scraperApiKey}&url=${encodeURIComponent(targetUrl)}`;
                 const scraperResponse = await fetch(scraperUrl);
 
@@ -49,33 +53,58 @@ export async function POST(request: NextRequest) {
 
                     // Combine and truncate to ~1500 chars for token efficiency
                     pageContext = `Title: ${title}\nDescription: ${description}\nContent: ${cleanText.substring(0, 1500)}`;
+
+                    // Validate content quality
+                    const totalContentLength = title.length + description.length + cleanText.length;
+                    hasGoodContent = totalContentLength > 100; // At least 100 chars of actual content
+
+                    console.log('[CommentGen] Content quality - Length:', totalContentLength, 'Good:', hasGoodContent);
                 } else {
-                    console.warn('Failed to scrape target URL, proceeding without context');
+                    console.warn('[CommentGen] Failed to scrape, status:', scraperResponse.status);
                 }
             } catch (scrapeError) {
-                console.warn('Scraping error:', scrapeError);
+                console.warn('[CommentGen] Scraping error:', scrapeError);
             }
         }
 
-        // STEP 2: Build the prompt with actual page context
-        const prompt = `Act as an industry expert in "${niche}". Write a highly valuable, insightful comment for a blog post.
+        // STEP 2: Build the prompt with actual page context OR fallback
+        let prompt = '';
+
+        if (hasGoodContent && pageContext) {
+            // We have good content - use detailed prompt
+            prompt = `Act as an industry expert in "${niche}". Write a highly valuable, insightful comment for a blog post.
 
 GOAL: Gently recommend this specific resource: ${bridgeUrl}
 
-PAGE CONTEXT:
-${pageContext || 'No page content available - use general knowledge about the niche.'}
+PAGE CONTENT:
+${pageContext}
 
-RULES:
-1. VALUE FIRST: Start with a specific, helpful insight or tip related to the ACTUAL CONTENT of the page. Reference something specific from the article if possible.
-2. NO "GREAT POST": Do NOT start with "Great post", "Thanks for sharing", or any generic fluff. Start directly with the insight.
-3. NATURAL RECOMMENDATION: After the insight, mention the resource naturally as a solution or further reading.
-   - Bad: "Check out this link: ${bridgeUrl}"
-   - Good: "I actually found a specific framework that automates this process here: ${bridgeUrl} - it might help with [X]."
+STRICT RULES:
+1. VALUE FIRST: Start with a specific, helpful insight related to the ACTUAL CONTENT above. Reference something from the article.
+2. NO GREETINGS: Do NOT start with "Hello", "Hi", "Great post", or "Thanks". Start DIRECTLY with the insight.
+3. NATURAL RECOMMENDATION: After the insight, mention the resource naturally.
+   - Example: "I found a framework that automates this: ${bridgeUrl} - helped me [specific benefit]."
 4. TONE: Professional, helpful, peer-to-peer. NOT a salesperson.
-5. LENGTH: 2-3 sentences maximum. Short and punchy.
-6. RELEVANCE: Your comment MUST be relevant to the page content above. Do NOT write about unrelated topics.
+5. LENGTH: 2-3 sentences maximum.
+6. RELEVANCE: Your comment MUST relate to the page content above.
+
+Write ONLY the comment text. No greetings, no pleasantries.`;
+        } else {
+            // No good content - use general niche-based prompt
+            console.warn('[CommentGen] Using fallback prompt (no page content)');
+
+            prompt = `Act as an industry expert in "${niche}". Write a valuable, professional comment for a blog post in this niche.
+
+GOAL: Naturally recommend this resource: ${bridgeUrl}
+
+STRICT RULES:
+1. Start with ONE specific insight or tip about ${niche} (no greetings, no "great post").
+2. Then naturally mention: "I found this resource helpful: ${bridgeUrl}"
+3. Professional tone, 2 sentences max.
+4. NO generic phrases like "Hello", "How are you", "Want to roleplay" etc.
 
 Write ONLY the comment text.`;
+        }
 
         const response = await fetch('https://chatgpt-42.p.rapidapi.com/gpt4', {
             method: 'POST',
