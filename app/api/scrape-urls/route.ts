@@ -17,6 +17,8 @@ export async function POST(request: NextRequest) {
         // Try fetching if API key exists
         if (apiKey) {
             try {
+                console.log('[ScraperAPI] Starting request for:', searchQuery);
+
                 // ScraperAPI synchronous endpoint
                 const scraperUrl = `http://api.scraperapi.com/?api_key=${apiKey}&url=${encodeURIComponent(
                     `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}&num=50`
@@ -24,16 +26,21 @@ export async function POST(request: NextRequest) {
 
                 const response = await fetch(scraperUrl);
 
+                console.log('[ScraperAPI] Response status:', response.status);
+
                 if (!response.ok) {
-                    console.warn(`ScraperAPI error: ${response.status} - Falling back to mock data`);
+                    console.warn(`[ScraperAPI] Error Status: ${response.status} - Falling back to mock data`);
                     throw new Error(`ScraperAPI error: ${response.status}`);
                 }
 
                 const html = await response.text();
+                console.log('[ScraperAPI] HTML received, length:', html.length);
 
                 // Extract URLs from Google search results
                 const urlPattern = /https?:\/\/(?!www\.google\.com|support\.google\.com|accounts\.google\.com|policies\.google\.com)[a-zA-Z0-9][-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)/g;
                 const matches = html.match(urlPattern) || [];
+
+                console.log('[ScraperAPI] Raw matches found:', matches.length);
 
                 // Filter and deduplicate URLs
                 const junkDomains = [
@@ -59,11 +66,15 @@ export async function POST(request: NextRequest) {
                     })
                     .slice(0, 50);
 
+                console.log('[ScraperAPI] Filtered URLs:', uniqueUrls.length);
+
             } catch (apiError) {
-                console.warn('ScraperAPI failed, using fallback:', apiError);
+                console.error('[ScraperAPI] Failed with error:', apiError);
                 // Intentionally empty uniqueUrls to trigger fallback below
                 uniqueUrls = [];
             }
+        } else {
+            console.warn('[ScraperAPI] No API key found, using fallback');
         }
 
         // FALLBACK: If API failed or returned no results, generate REAL working search URLs
