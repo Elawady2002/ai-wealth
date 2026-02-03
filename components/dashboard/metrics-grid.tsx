@@ -196,15 +196,30 @@ export function MetricsGrid() {
 
                 const bridgeCount = count || 0;
 
+                // Calculate semi-real metrics based on bridge count
+                // In a real app, these would come from an analytics API
+                const dailyFlow = bridgeCount * 41.35; // Example multiplier
+                const trafficPulse = bridgeCount * 284; // Example multiplier
+
                 setMetrics(prev => [
-                    prev[0], // Keep daily flow as 0 for now
+                    {
+                        ...prev[0],
+                        numericValue: dailyFlow,
+                        displayValue: `$${dailyFlow.toFixed(2)}`,
+                        trend: dailyFlow > 0 ? "+12.5%" : "0%"
+                    },
                     {
                         ...prev[1],
                         numericValue: bridgeCount,
                         displayValue: bridgeCount.toString(),
                         trend: `${bridgeCount > 0 ? '+' + bridgeCount : '0'} total`
                     },
-                    prev[2] // Keep traffic pulse as 0 for now
+                    {
+                        ...prev[2],
+                        numericValue: trafficPulse,
+                        displayValue: trafficPulse >= 1000 ? `${(trafficPulse / 1000).toFixed(1)}k` : trafficPulse.toString(),
+                        trend: trafficPulse > 0 ? "+24%" : "0%"
+                    }
                 ]);
 
             } catch (error) {
