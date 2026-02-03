@@ -2,8 +2,8 @@
 
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { NeonButton } from "@/components/ui/neon-button";
-import { CheckCircle, Globe, Signal, RefreshCw, BarChart3, Zap, ArrowRight, User, TrendingUp, Play, ShieldCheck, Clock } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle, Globe, Signal, RefreshCw, BarChart3, Zap, ArrowRight, User, TrendingUp, Play, ShieldCheck, Clock, ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -18,49 +18,88 @@ interface ScrapedData {
 interface BridgePreviewProps {
     url: string;
     data?: ScrapedData | null;
+    bridgeId?: string | null;
 }
 
-export function BridgePreview({ url, data }: BridgePreviewProps) {
+export function BridgePreview({ url, data, bridgeId }: BridgePreviewProps) {
     const [broadcasted, setBroadcasted] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState("");
     const router = useRouter();
     const { user } = useAuth();
 
-    const bridgeId = `BRG-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    // Use passed ID or fallback to fake for display if needed (though should be real)
+    const displayId = bridgeId || `BRG-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
-    const getDomain = (urlString: string) => {
-        try {
-            const domain = new URL(urlString.startsWith('http') ? urlString : `https://${urlString}`).hostname;
-            return domain.replace('www.', '');
-        } catch {
-            return urlString.slice(0, 30);
+    useEffect(() => {
+        const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://ai-wealth.com';
+        if (bridgeId) {
+            setPreviewUrl(`${baseUrl}/review/${bridgeId}`);
+        } else {
+            const params = new URLSearchParams();
+            if (data?.title) params.append('title', data.title);
+            if (data?.description) params.append('description', (data.description || "").substring(0, 200) + '...'); // Truncate for URL safety
+            if (data?.image) params.append('image', data.image);
+            if (url) params.append('url', url);
+            setPreviewUrl(`${baseUrl}/review/preview?${params.toString()}`);
         }
-    };
+    }, [bridgeId, data, url]);
 
     const handleBroadcast = async () => {
         setBroadcasted(true);
         setSaving(true);
 
         try {
-            const { error } = await supabase.from('bridges').insert({
-                user_id: user?.id,
-                title: data?.title || `Bridge - ${getDomain(url)}`,
-                affiliate_url: url,
-                status: 'indexing',
-                traffic: '0',
-                earnings: '$0.00',
-                created_at: new Date().toISOString(),
-            });
+            if (bridgeId) {
+                // Update existing bridge status to 'live'
+                const { error } = await supabase
+                    .from('bridges')
+                    .update({
+                        status: 'live',
+                        traffic: '0',
+                        earnings: '$0.00'
+                    })
+                    .eq('id', bridgeId);
 
-            if (error) console.error('Error saving bridge:', error);
+                if (error) throw error;
+            } else {
+                // FALLBACK: If bridge wasn't saved during sync, save it now!
+                if (!user) throw new Error("User not authenticated");
+
+                // Reconstruct title/desc logic roughly if needed
+                let title = data?.title || "Wealth Bridge";
+                if (!data?.title) {
+                    try {
+                        const hostname = new URL(url).hostname;
+                        const domain = hostname.replace('www.', '').split('.')[0];
+                        title = `Bridge - ${domain.charAt(0).toUpperCase() + domain.slice(1)}`;
+                    } catch (e) { }
+                }
+
+                const { error: insertError } = await supabase.from('bridges').insert({
+                    user_id: user.id,
+                    title: title.substring(0, 255),
+                    description: (data?.description || "").substring(0, 1000),
+                    image_url: data?.image || null,
+                    affiliate_url: url,
+                    status: 'live', // Directly live
+                    traffic: '0',
+                    earnings: '$0.00'
+                });
+
+                if (insertError) throw insertError;
+            }
 
             setTimeout(() => {
                 router.push('/bridges');
+                router.refresh(); // Refresh to ensure list is updated
             }, 2000);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error:', error);
             setSaving(false);
             setBroadcasted(false);
+            // Show explicit error to user
+            alert(`Broadcast failed: ${error?.message || "Unknown error"}`);
         }
     };
 
@@ -75,12 +114,11 @@ export function BridgePreview({ url, data }: BridgePreviewProps) {
                 <div className="inline-flex items-center gap-3 text-emerald-400 bg-emerald-500/10 px-6 py-2 rounded-full border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
                     <CheckCircle className="w-4 h-4" />
                     <span className="font-bold uppercase text-sm tracking-wide">Ready for Broadcast</span>
-                    <span className="text-gray-500 font-mono text-xs border-l border-white/10 pl-3">#{bridgeId}</span>
+                    <span className="text-gray-500 font-mono text-xs border-l border-white/10 pl-3">#{displayId.substring(0, 8)}</span>
                 </div>
             </motion.div>
 
             {/* PREVIEW CONTAINER */}
-            {/* We force a fixed width container for the "Desktop" look, then scale it down to fit the parent */}
             <div className="mb-12 w-full px-4 md:px-8 flex justify-center overflow-hidden">
                 <div className="relative w-full max-w-[1200px] bg-[#0f1115] rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
 
@@ -93,90 +131,85 @@ export function BridgePreview({ url, data }: BridgePreviewProps) {
                         </div>
                         <div className="flex-1 bg-[#1c1e24] rounded-lg h-10 flex items-center px-5 text-gray-400 font-mono text-sm border border-white/5 transition-colors hover:bg-[#23252b] hover:border-white/10 group">
                             <Globe className="w-4 h-4 mr-3 text-emerald-500 group-hover:text-emerald-400 transition-colors" />
-                            <span className="truncate max-w-[calc(100%-20px)] group-hover:text-gray-300 transition-colors">{url || "https://wealth-bridge.com/your-offer"}</span>
+                            <span className="truncate max-w-[calc(100%-120px)] text-emerald-400/80 group-hover:text-emerald-400 transition-colors">
+                                {previewUrl || "Loading..."}
+                            </span>
+
+                            {/* External Link Button */}
+                            {previewUrl && (
+                                <a
+                                    href={previewUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="ml-auto flex items-center gap-2 px-3 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold transition-colors border border-emerald-500/20"
+                                >
+                                    <span>OPEN</span>
+                                    <ExternalLink className="w-3 h-3" />
+                                </a>
+                            )}
                         </div>
                     </div>
 
                     {/* Scalable Content Area */}
-                    {/* This div simulates the desktop viewport */}
-                    <div className="w-full relative bg-white h-[600px] overflow-y-auto scrollbar-hide">
-                        {/* Hero Section */}
-                        <div className="bg-linear-to-b from-slate-50 to-white py-16 px-4 text-center">
-                            <div className="max-w-5xl mx-auto space-y-8">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 border border-red-100 text-red-600 font-bold text-xs uppercase tracking-widest">
-                                    <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                                    </span>
-                                    Restricted Access
-                                </div>
-
-                                <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight">
-                                    {data?.title ? (
-                                        <span>{data.title}</span>
-                                    ) : (
-                                        <>
-                                            The <span className="bg-clip-text text-transparent bg-linear-to-r from-red-600 to-orange-600">"Silent Architecture"</span> That<br className="hidden md:block" />
-                                            Generates Wealth While You Sleep
-                                        </>
-                                    )}
-                                </h1>
-
-                                <p className="text-xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
-                                    {data?.description ? data.description : "Watch the private briefing below to discover the automated system banking $1,200+ daily for ordinary people."}
-                                </p>
+                    <div className="w-full relative bg-slate-50 h-[600px] overflow-y-auto scrollbar-hide font-sans text-slate-900">
+                        {/* Top Bar Preview */}
+                        <div className="bg-white border-b border-slate-200 sticky top-0 z-10 px-6 h-12 flex items-center justify-between">
+                            <div className="text-sm font-bold text-slate-800">Wealth<span className="text-emerald-600">Bridge</span></div>
+                            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase text-slate-500">
+                                <ShieldCheck className="w-3 h-3 text-emerald-500" /> Verified Review
                             </div>
                         </div>
 
-                        {/* Video Section */}
-                        <div className="bg-white pb-20 px-4">
-                            <div className="max-w-5xl mx-auto">
-                                <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl shadow-slate-900/20 group cursor-pointer border-4 border-white ring-1 ring-slate-900/10">
-                                    {/* Video Placeholder Content */}
-                                    {data?.image && (
+                        <div className="p-8 md:p-12">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                                {/* Left: Product Image */}
+                                <div className="relative group rounded-xl border border-slate-200 shadow-xl overflow-hidden p-4 flex items-center justify-center bg-white aspect-4/3">
+                                    {data?.image ? (
+                                        /* eslint-disable-next-line @next/next/no-img-element */
                                         <img
                                             src={data.image}
-                                            alt="Preview"
-                                            className="absolute inset-0 w-full h-full object-cover opacity-50"
+                                            alt="Scraped Product"
+                                            className="object-contain w-full h-full drop-shadow-md mix-blend-multiply"
                                         />
+                                    ) : (
+                                        <div className="flex flex-col items-center text-slate-300">
+                                            <div className="w-16 h-16 rounded-full bg-slate-200 mb-3" />
+                                            <p className="text-sm font-medium">No Image Found</p>
+                                        </div>
                                     )}
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-                                        <div className="w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/20 shadow-lg">
-                                            <Play className="w-10 h-10 text-white fill-white ml-2" />
-                                        </div>
-                                        <p className="text-white/60 font-medium uppercase tracking-widest text-sm">Click to Initialize Stream</p>
-                                    </div>
-
-                                    {/* Video Controls Mockup */}
-                                    <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/10 z-20">
-                                        <div className="h-full w-1/3 bg-red-600 relative">
-                                            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-red-600 rounded-full shadow-lg scale-0 group-hover:scale-100 transition-transform" />
-                                        </div>
+                                    <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md animate-pulse">
+                                        LIVE OFFER
                                     </div>
                                 </div>
 
-                                {/* Trust Badges */}
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 border-t border-slate-100 pt-8">
-                                    <div className="flex items-center justify-center gap-3 text-slate-500">
-                                        <ShieldCheck className="w-5 h-5 text-emerald-500" />
-                                        <span className="font-semibold text-sm">256-Bit Secure</span>
+                                {/* Right: Content */}
+                                <div className="space-y-6">
+                                    <div>
+                                        <div className="inline-flex items-center gap-1.5 mb-3 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase border border-emerald-100">
+                                            <div className="w-1 h-1 rounded-full bg-emerald-500" /> Recommended
+                                        </div>
+                                        <h1 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight mb-4">
+                                            {data?.title || "Product Title Placeholder"}
+                                        </h1>
+                                        <p className="text-slate-600 leading-relaxed text-sm">
+                                            {data?.description || "This is a placeholder description. Once the bridge is live, the actual product description scraped from the target URL will appear here."}
+                                        </p>
                                     </div>
-                                    <div className="flex items-center justify-center gap-3 text-slate-500">
-                                        <User className="w-5 h-5 text-blue-500" />
-                                        <span className="font-semibold text-sm">Member Only Access</span>
-                                    </div>
-                                    <div className="flex items-center justify-center gap-3 text-slate-500">
-                                        <Clock className="w-5 h-5 text-purple-500" />
-                                        <span className="font-semibold text-sm">Limited Time Offer</span>
-                                    </div>
-                                </div>
 
-                                {/* CTA Area */}
-                                <div className="mt-12 text-center">
-                                    <button className="bg-linear-to-r from-red-600 to-orange-600 text-white font-black py-6 px-16 rounded-xl text-xl md:text-2xl uppercase tracking-wide shadow-xl shadow-red-600/20 hover:scale-105 hover:shadow-red-600/40 transition-all duration-300">
+                                    <div className="space-y-2 border-y border-slate-100 py-4">
+                                        {[1, 2, 3].map((i) => (
+                                            <div key={i} className="flex items-center gap-2">
+                                                <div className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                                                    <ArrowRight className="w-2.5 h-2.5 text-emerald-600" />
+                                                </div>
+                                                <div className="h-2 bg-slate-100 rounded w-3/4" />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <button className="w-full bg-slate-900 text-white font-bold py-3 rounded-lg shadow-lg text-sm uppercase tracking-wide">
                                         Get Instant Access
                                     </button>
-                                    <p className="mt-4 text-slate-400 text-xs font-bold uppercase tracking-widest">No Credit Card Required For Demo</p>
                                 </div>
                             </div>
                         </div>

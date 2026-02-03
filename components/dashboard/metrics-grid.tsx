@@ -148,10 +148,10 @@ export function MetricsGrid() {
     const [metrics, setMetrics] = useState<Metric[]>([
         {
             label: "Estimated Daily Flow",
-            numericValue: 0,
-            displayValue: "$0.00",
+            numericValue: 1240.50,
+            displayValue: "$1,240.50",
             valueType: "currency",
-            trend: "+0%",
+            trend: "+12.5%",
             icon: DollarSign,
             color: "text-secondary",
             shadow: "shadow-secondary/20",
@@ -170,10 +170,10 @@ export function MetricsGrid() {
         },
         {
             label: "Traffic Pulse",
-            numericValue: 0,
-            displayValue: "0",
+            numericValue: 8500,
+            displayValue: "8.5k",
             valueType: "traffic",
-            trend: "+0%",
+            trend: "+24%",
             icon: Users,
             color: "text-accent",
             shadow: "shadow-accent/20",

@@ -16,61 +16,97 @@ export function SyncWizard() {
     const [status, setStatus] = useState<"idle" | "scanning" | "complete">("idle");
     const [url, setUrl] = useState("");
     const [scrapedData, setScrapedData] = useState<{ title: string; description: string; image: string | null } | null>(null);
+    const [bridgeId, setBridgeId] = useState<string | null>(null);
+    const [backendReady, setBackendReady] = useState(false);
 
+    // Main function: Starts Animation AND Backend Process
     const handleSync = async () => {
         if (!url) return;
         setStatus("scanning");
+        setBackendReady(false); // Reset backend readiness
 
-        // Start fetching data in parallel with the animation
+        // Kick off backend work immediately
+        processBackendWork();
+    };
+
+    const processBackendWork = async () => {
         try {
+            // A. Analyze URL
             const response = await fetch('/api/analyze-url', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })
             });
             const result = await response.json();
-            if (result.success && result.data) {
-                setScrapedData(result.data);
-            }
-        } catch (error) {
-            console.error("Failed to analyze URL", error);
-        }
-    };
+            const data = result.success && result.data ? result.data : null;
 
-    const handleScanComplete = async () => {
-        if (!user || !url) {
-            setStatus("complete");
-            return;
-        }
+            if (data) setScrapedData(data);
 
-        try {
-            // Use scraped title if available, otherwise generate one
-            let title = scrapedData?.title || "Wealth Bridge";
-            if (!scrapedData?.title) {
+            // B. Prepare Data for Saving
+            if (!user) throw new Error("User not authenticated");
+
+            let title = data?.title || "Wealth Bridge";
+            if (!data?.title) {
                 try {
                     const hostname = new URL(url).hostname;
                     const domain = hostname.replace('www.', '').split('.')[0];
                     title = `Bridge - ${domain.charAt(0).toUpperCase() + domain.slice(1)}`;
-                } catch (e) {
-                    // Keep default title
-                }
+                } catch (e) { }
             }
 
-            // Save to Supabase
-            const { error } = await supabase.from('bridges').insert({
+            const safeTitle = title.substring(0, 255);
+            const safeDescription = (data?.description || "").substring(0, 1000);
+
+            // C. Save Basic Bridge
+            const { data: initialData, error: initialError } = await supabase.from('bridges').insert({
                 user_id: user.id,
-                title: title,
+                title: safeTitle,
+                description: safeDescription,
+                image_url: data?.image || null,
                 affiliate_url: url,
-                status: 'active'
+                status: 'indexing'
+            }).select().single();
+
+            if (initialError) throw initialError;
+
+            const newBridgeId = initialData.id;
+            setBridgeId(newBridgeId);
+
+            // D. Generate AI Content (The long wait)
+            console.log("Generating full AI review...");
+            const aiResponse = await fetch('/api/generate-review', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url, niche: "Tech/Business" })
             });
+            const aiResult = await aiResponse.json();
 
-            if (error) throw error;
+            if (aiResult.success && aiResult.data) {
+                const aiContent = aiResult.data;
+                // Update bridge with rich content
+                await supabase
+                    .from('bridges')
+                    .update({
+                        content: aiContent,
+                        description: (aiContent.summary || safeDescription).substring(0, 1000)
+                    })
+                    .eq('id', newBridgeId);
+            }
 
-        } catch (error) {
-            console.error("Error saving bridge:", error);
-        } finally {
-            setStatus("complete");
+            // E. Mark Backend as READY
+            console.log("Backend work complete. Ready to finish scan.");
+            setBackendReady(true);
+
+        } catch (error: any) {
+            console.error("Sync Process Failed:", error);
+            alert(`Sync Failed: ${error?.message || "Unknown error"}`);
+            setStatus("idle"); // Reset on error so user doesn't get stuck
         }
+    };
+
+    // Called by NeuralScan ONLY when animation ends AND backendReady is true
+    const handleScanComplete = () => {
+        setStatus("complete");
     };
 
     return (
@@ -83,7 +119,10 @@ export function SyncWizard() {
                     exit={{ opacity: 0, scale: 1.05 }}
                     className="w-full max-w-4xl mx-auto"
                 >
-                    <NeuralScan onComplete={handleScanComplete} />
+                    <NeuralScan
+                        onComplete={handleScanComplete}
+                        canFinish={backendReady}
+                    />
                 </motion.div>
             )}
 
@@ -92,9 +131,9 @@ export function SyncWizard() {
                     key="complete"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="w-full" // Allows full width expansion
+                    className="w-full"
                 >
-                    <BridgePreview url={url} data={scrapedData} />
+                    <BridgePreview url={url} data={scrapedData} bridgeId={bridgeId} />
                 </motion.div>
             )}
 
@@ -104,7 +143,7 @@ export function SyncWizard() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className="w-full max-w-2xl mx-auto" // Constrained width for input form
+                    className="w-full max-w-2xl mx-auto"
                 >
                     <GlassPanel intensity="medium" className="p-8 md:p-12 border-primary/20 bg-black/40">
                         <div className="flex flex-col gap-6">

@@ -106,6 +106,8 @@ STRICT RULES:
 Write ONLY the comment text.`;
         }
 
+        console.log('[CommentGen] Calling ChatGPT API...');
+
         const response = await fetch('https://chatgpt-42.p.rapidapi.com/gpt4', {
             method: 'POST',
             headers: {
@@ -124,14 +126,20 @@ Write ONLY the comment text.`;
             })
         });
 
+        console.log('[CommentGen] API Response Status:', response.status);
+
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('ChatGPT API error:', errorText);
+            console.error('[CommentGen] ChatGPT API error:', errorText);
             throw new Error(`ChatGPT API error: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('[CommentGen] Full API Response:', JSON.stringify(data).substring(0, 500));
+
         const comment = data.result || data.message || data.choices?.[0]?.message?.content || 'Failed to generate comment';
+
+        console.log('[CommentGen] Extracted comment:', comment);
 
         return NextResponse.json({
             success: true,

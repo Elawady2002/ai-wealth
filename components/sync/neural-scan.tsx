@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 interface NeuralScanProps {
     onComplete: () => void;
+    canFinish: boolean;
 }
 
 const steps = [
@@ -17,31 +18,34 @@ const steps = [
     { label: "Offer Mapping", icon: BrainCircuit, color: "text-purple-400" },
     { label: "Persuasion Synthesis", icon: PenTool, color: "text-yellow-400" },
     { label: "SEO Structuring", icon: Globe, color: "text-green-400" },
-    { label: "Bridge Deployment", icon: Rocket, color: "text-orange-400" },
+    { label: "Finalizing & Saving", icon: Rocket, color: "text-orange-400" },
 ];
 
-export function NeuralScan({ onComplete }: NeuralScanProps) {
+export function NeuralScan({ onComplete, canFinish }: NeuralScanProps) {
     const [currentStep, setCurrentStep] = useState(0);
 
     useEffect(() => {
-        // If we've passed the last step, trigger complete
+        // If we've passed the last step, check if we can actually finish
         if (currentStep >= steps.length) {
-            const timer = setTimeout(onComplete, 800);
-            return () => clearTimeout(timer);
+            if (canFinish) {
+                const timer = setTimeout(onComplete, 800);
+                return () => clearTimeout(timer);
+            }
+            // If not canFinish, just wait here (effectively pauses on last step completion)
+            return;
         }
 
         // Advance step
         const timer = setTimeout(() => {
             setCurrentStep((prev) => prev + 1);
-        }, 1200); // Speed of each step
+        }, 1500); // Slightly slower for better perception
 
         return () => clearTimeout(timer);
-    }, [currentStep, onComplete]);
+    }, [currentStep, onComplete, canFinish]);
 
     // Calculate progress
-    // If currentStep is 0 -> 0%? No, let's say 1/7.
-    // We want to reach 100% when currentStep == steps.length
-    const progress = Math.min(100, Math.round(((currentStep + 1) / steps.length) * 100));
+    // If not finished, max out at 95% to show "almost done"
+    const progress = Math.min(canFinish ? 100 : 95, Math.round(((currentStep + 1) / steps.length) * 100));
 
     const currentStepData = steps[Math.min(currentStep, steps.length - 1)];
 

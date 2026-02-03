@@ -30,10 +30,10 @@ export function GlobalBanner() {
                     </h3>
                     <div className="space-y-2 text-white/90 text-xs md:text-sm font-medium leading-relaxed max-w-4xl">
                         <p>
-                            The P65 Account is great, but if you want to scale to truly life-changing income, you need to watch this training which shows how to make the serious big boy big girl money. And guess what?
+                            AI Wealth OS is powerful, but if you want to scale to truly life-changing income, you need to watch this training which shows how to automate your entire workflow. And guess what?
                         </p>
                         <p>
-                            This training is free if you're a P65 account member. So, if you want to watch the training, just tap the yellow button below.
+                            This training is free for all AI Wealth members. So, if you want to unlock your full potential, just tap the yellow button below.
                         </p>
                     </div>
 
