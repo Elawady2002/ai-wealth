@@ -83,12 +83,15 @@ export function SyncWizard() {
 
             if (aiResult.success && aiResult.data) {
                 const aiContent = aiResult.data;
-                // Update bridge with rich content
+                const aiNiche = aiContent.product_niche || "General Interests";
+
+                // Update bridge with rich content and the detected niche
                 await supabase
                     .from('bridges')
                     .update({
                         content: aiContent,
-                        description: (aiContent.summary || safeDescription).substring(0, 1000)
+                        description: (aiContent.summary || safeDescription).substring(0, 1000),
+                        niche: aiNiche
                     })
                     .eq('id', newBridgeId);
             }

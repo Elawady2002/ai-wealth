@@ -55,6 +55,7 @@ export async function POST(request: NextRequest) {
         OUTPUT FORMAT: strictly valid JSON.
         {
             "summary": "2-3 sentences hook summary.",
+            "product_niche": "Return ONLY the broad market category/niche (1-2 words in English). Example: 'Homesteading', 'Weight Loss', 'Dog Training'.",
             "article_body": [
                 { "heading": "What is [Product]?", "content": "Detailed paragraphs explaining the core proposition." },
                 { "heading": "Key Features Breakdown", "content": "Analysis of features." },
