@@ -1,4 +1,5 @@
 "use client";
+// Vercel Trigger: Redesign Premium Pages
 
 import { GlassPanel } from "@/components/ui/glass-panel";
 import {
@@ -233,8 +234,8 @@ export default function AutomatedIncomePage() {
                                 key={n}
                                 onClick={() => setSelectedNiche(n)}
                                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${selectedNiche === n
-                                        ? "bg-[#059669] text-white border-[#059669] shadow-[0_0_15px_rgba(5,150,105,0.3)]"
-                                        : "bg-black/40 text-gray-400 border-white/10 hover:border-[#059669]/50 hover:text-white"
+                                    ? "bg-[#059669] text-white border-[#059669] shadow-[0_0_15px_rgba(5,150,105,0.3)]"
+                                    : "bg-black/40 text-gray-400 border-white/10 hover:border-[#059669]/50 hover:text-white"
                                     }`}
                             >
                                 {n}
